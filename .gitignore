@@ -1,0 +1,11 @@
+# Ignore local dependencies and runtime files
+node_modules/
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+.sixth/
+.vscode/
+dist/
+.env
+backend/.env
