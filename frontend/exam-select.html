@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>RRB AI Practice Center - Select Your Exam</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="./css/app-shell.css" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            background: "var(--bg-main)",
+            primary: "var(--primary)",
+            "primary-container": "var(--primary-soft)",
+            "primary-fixed": "var(--accent)",
+            "secondary-container": "var(--primary-soft)",
+            "on-secondary-container": "var(--primary)",
+            "surface-container-low": "var(--bg-card)",
+            "surface-container-lowest": "var(--bg-surface)",
+            "surface-container-high": "var(--bg-elevated)",
+            "outline-variant": "var(--border)",
+            "on-surface": "var(--text-main)",
+            "on-surface-variant": "var(--text-muted)"
+          },
+          fontFamily: {
+            headline: ["Manrope"],
+            body: ["Inter"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    h1, h2, h3 { font-family: "Manrope", sans-serif; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font: inherit;
+      font-weight: 700;
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--bg-main) 8%, transparent);
+      cursor: pointer;
+    }
+    body {
+      background: #f5f7fb;
+    }
+    .exam-card {
+      position: relative;
+      border: 1.5px solid var(--border);
+      background: #ffffff;
+      box-shadow: 0 12px 32px rgba(25, 28, 30, 0.05);
+    }
+    .exam-card.active {
+      border-color: var(--primary) !important;
+      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.16);
+      background: #ffffff;
+      transform: translateY(-2px);
+    }
+    .exam-card.active::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 1rem;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 16%, transparent);
+      pointer-events: none;
+    }
+    .selected-badge { display: none; }
+    .exam-card.active .selected-badge { display: flex; }
+    .exam-card.active .selected-copy {
+      color: var(--primary);
+      opacity: 1;
+    }
+    .exam-card:not(.active) .selected-copy {
+      opacity: 0.7;
+    }
+    body.dark-mode {
+      background: var(--bg-main) !important;
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .bg-background,
+    body.dark-mode .bg-white\/80 {
+      background-color: var(--bg-main) !important;
+    }
+    body.dark-mode .bg-surface-container-lowest {
+      background-color: var(--bg-card) !important;
+    }
+    body.dark-mode .bg-surface-container-low {
+      background-color: var(--bg-surface) !important;
+    }
+    body.dark-mode .bg-surface-container-high {
+      background-color: var(--bg-elevated) !important;
+    }
+    body.dark-mode .text-on-surface,
+    body.dark-mode .text-primary,
+    body.dark-mode .text-slate-900,
+    body.dark-mode .text-on-secondary-container {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .text-on-surface-variant,
+    body.dark-mode .text-slate-500 {
+      color: var(--text-muted) !important;
+    }
+    body.dark-mode .border-outline-variant\/20 {
+      border-color: var(--border) !important;
+    }
+    body.dark-mode .exam-card {
+      background: #16213e !important;
+      border-color: var(--border) !important;
+      box-shadow: 0 18px 34px rgba(6, 10, 25, 0.18);
+    }
+    body.dark-mode .exam-card.active {
+      border-color: var(--primary) !important;
+      box-shadow: 0 10px 24px rgba(6, 10, 25, 0.22);
+      background: #16213e !important;
+    }
+    body.dark-mode .theme-toggle {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+    .page-header {
+      background: #ffffff;
+      box-shadow: 0 6px 24px rgba(25, 28, 30, 0.04);
+    }
+    .eyebrow {
+      background: rgba(111, 137, 255, 0.12);
+      color: #3b4ea1;
+    }
+    .page-title-accent {
+      color: var(--primary);
+    }
+    .confirm-button {
+      background: var(--bg-sidebar);
+      box-shadow: 0 12px 40px rgba(0, 24, 20, 0.18);
+    }
+    .confirm-button:hover {
+      background: #01211c;
+    }
+    body.dark-mode .confirm-button {
+      background: var(--bg-sidebar);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.32);
+    }
+    body.dark-mode .page-header {
+      background: #1a1a2e;
+    }
+    body.dark-mode .eyebrow {
+      background: #3a3c72;
+      color: #dfe5ff;
+    }
+  </style>
+</head>
+<body class="flex h-screen flex-col overflow-hidden bg-background text-on-surface">
+  <header class="page-header sticky top-0 z-50 bg-background shadow-sm backdrop-blur-xl">
+    <div class="flex w-full items-center justify-between px-6 py-4">
+      <div class="flex items-center gap-8">
+        <span class="text-2xl font-black tracking-tight text-on-surface">RRB AI Practice Center</span>
+        <div class="hidden items-center gap-6 md:flex">
+          <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Step 2 of 3</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        
+      </div>
+    </div>
+  </header>
+  <main class="relative flex flex-1 flex-col items-center justify-start overflow-y-auto px-4 py-6 md:px-8 pt-10">
+    <div class="pointer-events-none absolute right-0 top-0 -mr-20 -mt-20 h-96 w-96 rounded-full bg-primary-container/5 blur-3xl"></div>
+    <div class="pointer-events-none absolute bottom-0 left-0 -mb-20 -ml-20 h-80 w-80 rounded-full bg-secondary-container/10 blur-3xl"></div>
+    <div class="flex w-full max-w-6xl flex-col items-center">
+      <div class="mb-10 space-y-3 text-center">
+        <div class="eyebrow mb-2 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest text-on-secondary-container">Personalization</div>
+        <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-primary md:text-5xl">Choose Your <span class="page-title-accent text-primary">Target Goal</span></h1>
+        <p class="mx-auto max-w-lg font-medium text-on-surface-variant">Select the exam path you are focusing on. We will tailor your AI-powered practice sets and performance analysis accordingly.</p>
+      </div>
+      <form id="exam-select-form" class="w-full">
+        <input id="selected-exam" name="exam" type="hidden" value="" />
+        <div class="grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <button class="exam-card group relative overflow-hidden rounded-2xl border border-outline-variant/20 bg-surface-container-low p-8 text-left transition-all duration-300 hover:bg-surface-container-lowest" data-exam-card="RRB NTPC" onclick="window.__rrbSetExam && window.__rrbSetExam('RRB NTPC')" type="button">
+            <div class="selected-badge absolute right-4 top-4 h-7 w-7 items-center justify-center rounded-full bg-primary text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1">check</span></div>
+            <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary-fixed text-primary"><span class="material-symbols-outlined text-3xl">train</span></div>
+            <h3 class="mb-2 text-xl font-bold text-primary">RRB NTPC</h3>
+            <p class="mb-6 text-sm leading-relaxed text-on-surface-variant">Non-Technical Popular Categories. Covers graduate and under-graduate posts.</p>
+            <div class="selected-copy flex items-center gap-2 text-xs font-bold uppercase tracking-tight text-on-surface-variant/50"><span>Selected Path</span><div class="h-px flex-1 bg-outline-variant/30"></div></div>
+          </button>
+          <button class="exam-card group relative rounded-2xl border border-outline-variant/20 bg-surface-container-low p-8 text-left transition-all duration-300 hover:bg-surface-container-lowest" data-exam-card="RRB Group D" onclick="window.__rrbSetExam && window.__rrbSetExam('RRB Group D')" type="button">
+            <div class="selected-badge absolute right-4 top-4 h-7 w-7 items-center justify-center rounded-full bg-primary text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1">check</span></div>
+            <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-surface-container-high text-primary/60 transition-colors group-hover:bg-primary-soft group-hover:text-primary"><span class="material-symbols-outlined text-3xl">groups</span></div>
+            <h3 class="mb-2 text-xl font-bold text-primary">RRB Group D</h3>
+            <p class="mb-6 text-sm leading-relaxed text-on-surface-variant">Level-1 Track Maintainer and Assistant posts across various departments.</p>
+            <div class="selected-copy flex items-center gap-2 text-xs font-bold uppercase tracking-tight text-on-surface-variant/50"><span>Select Exam</span><div class="h-px flex-1 bg-outline-variant/30"></div></div>
+          </button>
+          <button class="exam-card group relative rounded-2xl border border-outline-variant/20 bg-surface-container-low p-8 text-left transition-all duration-300 hover:bg-surface-container-lowest" data-exam-card="RRB Technician Grade 3" onclick="window.__rrbSetExam && window.__rrbSetExam('RRB Technician Grade 3')" type="button">
+            <div class="selected-badge absolute right-4 top-4 h-7 w-7 items-center justify-center rounded-full bg-primary text-white"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1">check</span></div>
+            <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-surface-container-high text-primary/60 transition-colors group-hover:bg-primary-fixed group-hover:text-primary"><span class="material-symbols-outlined text-3xl">construction</span></div>
+            <h3 class="mb-2 text-xl font-bold text-primary">RRB Technician Grade 3</h3>
+            <p class="mb-6 text-sm leading-relaxed text-on-surface-variant">Technician Grade III CBT with math, reasoning, science and awareness focus.</p>
+            <div class="selected-copy flex items-center gap-2 text-xs font-bold uppercase tracking-tight text-on-surface-variant/50"><span>Select Exam</span><div class="h-px flex-1 bg-outline-variant/30"></div></div>
+          </button>
+        </div>
+        <div class="mt-12 flex w-full max-w-lg items-center justify-between gap-6">
+          <a class="flex items-center gap-2 font-bold text-primary transition-transform hover:-translate-x-1" href="./login.html"><span class="material-symbols-outlined">arrow_back</span><span>Previous</span></a>
+          <button id="exam-continue-button" class="confirm-button flex items-center gap-3 rounded-2xl px-12 py-4 text-lg font-bold text-white transition-all active:scale-95" onclick="window.__rrbContinueExamSelection && window.__rrbContinueExamSelection(event)" type="submit">
+            Confirm Choice
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script type="module" src="./js/app.js"></script>
+  <script>
+    (() => {
+      const examForm = document.querySelector("#exam-select-form");
+      if (!examForm || examForm.dataset.fallbackBound === "true") {
+        return;
+      }
+
+      examForm.dataset.fallbackBound = "true";
+
+      const examCards = Array.from(document.querySelectorAll("[data-exam-card]"));
+      const examInput = document.querySelector("#selected-exam");
+      const continueButton = document.querySelector("#exam-continue-button");
+      const allowedExams = examCards.map((card) => card.dataset.examCard);
+
+      const readJson = (key, fallback) => {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch {
+          return fallback;
+        }
+      };
+
+      const saveJson = (key, value) => {
+        localStorage.setItem(key, JSON.stringify(value));
+      };
+
+      const currentUser = readJson("rrbCurrentUser", null);
+      if (!currentUser) {
+        window.location.href = "./login.html";
+        return;
+      }
+
+      const setSelectedExam = (examName) => {
+        const nextExam = allowedExams.includes(examName) ? examName : "RRB NTPC";
+        if (examInput) {
+          examInput.value = nextExam;
+        }
+
+        examCards.forEach((card) => {
+          const isActive = card.dataset.examCard === nextExam;
+          card.classList.toggle("active", isActive);
+          card.setAttribute("aria-pressed", isActive ? "true" : "false");
+          const copy = card.querySelector(".selected-copy span");
+          if (copy) {
+            copy.textContent = isActive ? "Selected Path" : "Select Exam";
+          }
+        });
+      };
+
+      const continueToDashboard = () => {
+        const preferredExam = examInput?.value || "RRB NTPC";
+        const nextUser = { ...currentUser, preferredExam };
+        saveJson("rrbCurrentUser", nextUser);
+
+        const profile = readJson("rrbQuizProfile", {});
+        saveJson("rrbQuizProfile", {
+          ...profile,
+          name: nextUser.name || profile.name || "",
+          preferredExam,
+          preferredStage: profile.preferredStage || ""
+        });
+
+        const authUsers = readJson("rrbAuthUsers", []);
+        const nextUsers = authUsers.map((user) =>
+          user.email === nextUser.email ? { ...user, preferredExam } : user
+        );
+        saveJson("rrbAuthUsers", nextUsers);
+
+        localStorage.setItem("selectedExam", preferredExam);
+        window.location.href = "./dashboard.html";
+      };
+
+      window.__rrbSetExam = setSelectedExam;
+      window.__rrbContinueExamSelection = (event) => {
+        if (event) {
+          event.preventDefault();
+        }
+        continueToDashboard();
+      };
+
+      examCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          setSelectedExam(card.dataset.examCard);
+        });
+      });
+
+      setSelectedExam(currentUser.preferredExam || localStorage.getItem("selectedExam") || "RRB NTPC");
+
+      examForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        continueToDashboard();
+      });
+
+      continueButton?.addEventListener("click", (event) => {
+        event.preventDefault();
+        continueToDashboard();
+      });
+    })();
+  </script>
+</body>
+</html>
