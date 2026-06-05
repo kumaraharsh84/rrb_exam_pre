@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>The Academic Edge | Study Control Center</title>
+  <script>
+    (() => {
+      const buildToken = "20260513c";
+      const url = new URL(window.location.href);
+      if (url.searchParams.get("v") !== buildToken) {
+        url.searchParams.set("v", buildToken);
+        window.location.replace(url.toString());
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="./css/app-shell.css" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            background: "var(--bg-main)",
+            primary: "var(--primary)",
+            "primary-container": "var(--primary-soft)",
+            "primary-fixed": "var(--accent)",
+            "surface-container-lowest": "var(--bg-surface)",
+            "surface-container-low": "var(--bg-card)",
+            "surface-container-high": "var(--bg-elevated)",
+            "outline-variant": "var(--border)",
+            "on-surface": "var(--text-main)",
+            "on-surface-variant": "var(--text-muted)",
+            "secondary-container": "var(--primary-soft)",
+            "on-secondary-container": "var(--primary)"
+          },
+          fontFamily: {
+            headline: ["Manrope"],
+            body: ["Inter"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .font-headline { font-family: "Manrope", sans-serif; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font: inherit;
+      font-weight: 700;
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--bg-main) 8%, transparent);
+      cursor: pointer;
+    }
+    body {
+      background: #f5f7fb;
+    }
+    .tab-btn.active { background: var(--primary); color: var(--bg-surface); }
+    .practice-type-btn.active { border-color: var(--primary); box-shadow: 0 14px 28px color-mix(in srgb, var(--primary) 12%, transparent); }
+    .practice-type-btn.active .practice-type-title { color: var(--text-main); }
+    .practice-type-btn.active .practice-type-copy { color: var(--text-muted); }
+    .practice-type-btn.active .practice-type-meta { color: var(--primary); }
+    .practice-type-btn.active .practice-type-check { opacity: 1; transform: scale(1); }
+    body.dark-mode {
+      background: var(--bg-main) !important;
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .bg-background {
+      background-color: var(--bg-main) !important;
+    }
+    body.dark-mode .bg-surface-container-lowest {
+      background-color: var(--bg-card) !important;
+    }
+    body.dark-mode .bg-surface-container-low {
+      background-color: var(--bg-surface) !important;
+    }
+    body.dark-mode .bg-surface-container-high {
+      background-color: var(--bg-elevated) !important;
+    }
+    body.dark-mode .text-on-surface,
+    body.dark-mode .text-primary,
+    body.dark-mode .text-on-secondary-container {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .text-on-surface-variant {
+      color: var(--text-muted) !important;
+    }
+    body.dark-mode .border-outline-variant\/20 {
+      border-color: var(--border) !important;
+    }
+    body.dark-mode input,
+    body.dark-mode select {
+      background: var(--bg-surface) !important;
+      color: var(--text-main) !important;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 50%, transparent);
+    }
+    body.dark-mode input::placeholder {
+      color: var(--text-dim) !important;
+    }
+    body.dark-mode select option {
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+    body.dark-mode #profile-menu-button,
+    body.dark-mode .practice-type-btn:not(.active),
+    body.dark-mode .tab-btn:not(.active) {
+      background-color: var(--bg-card) !important;
+      color: var(--text-main) !important;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 90%, transparent);
+    }
+    body.dark-mode .practice-type-btn:not(.active) .practice-type-title {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .practice-type-btn:not(.active) .practice-type-copy,
+    body.dark-mode .practice-type-btn:not(.active) .practice-type-meta {
+      color: var(--text-muted) !important;
+    }
+    body.dark-mode .tab-btn.active,
+    body.dark-mode .practice-type-btn.active {
+      background: var(--primary);
+      color: var(--bg-surface);
+    }
+    body.dark-mode .practice-type-btn.active .practice-type-title,
+    body.dark-mode .practice-type-btn.active .practice-type-copy,
+    body.dark-mode .practice-type-btn.active .practice-type-meta {
+      color: var(--text-main);
+    }
+    body.dark-mode .theme-toggle {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+    .sidebar-tab-link {
+      position: relative;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .sidebar-tab-link .material-symbols-outlined {
+      transition: transform 0.2s ease, font-variation-settings 0.2s ease;
+    }
+    .sidebar-tab-link:hover {
+      background: rgba(15, 118, 110, 0.06);
+      color: var(--text-main);
+    }
+    .sidebar-tab-link.active {
+      background: rgba(111, 137, 255, 0.08);
+      border-color: rgba(111, 137, 255, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(111, 137, 255, 0.08);
+      color: #243d9b;
+      font-weight: 800;
+      transform: translateX(2px);
+    }
+    .sidebar-tab-link.active .material-symbols-outlined {
+      font-variation-settings: "FILL" 1, "wght" 600, "GRAD" 0, "opsz" 24;
+      transform: scale(1.08);
+    }
+    body.dark-mode .sidebar-tab-link {
+      color: var(--text-muted);
+    }
+    body.dark-mode .sidebar-tab-link:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+    body.dark-mode .sidebar-tab-link.active {
+      background: rgba(31, 71, 103, 0.9);
+      border-color: rgba(30, 166, 156, 0.35);
+      box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.08);
+      color: #f7f7fb;
+    }
+    .dashboard-page {
+      background: #f5f7fb;
+    }
+    .brand-mark {
+      background: var(--bg-sidebar);
+      color: var(--accent);
+    }
+    #profile-avatar,
+    #profile-avatar-panel {
+      background: var(--bg-sidebar) !important;
+      color: #ffffff !important;
+    }
+    .profile-trigger,
+    .profile-panel-secondary,
+    .profile-name-input {
+      background: #eef2f8;
+    }
+    .primary-action {
+      background: var(--bg-sidebar);
+      color: #ffffff;
+    }
+    .primary-action:hover {
+      background: #01211c;
+    }
+    .final-mock-card {
+      background: linear-gradient(135deg, #eef8f3, #edf8f7);
+      color: var(--text-main);
+    }
+    .final-mock-badge {
+      background: var(--bg-sidebar);
+      color: #ffffff;
+    }
+    .final-mock-card p,
+    .final-mock-card h3,
+    .final-mock-card .text-white,
+    .final-mock-card .text-white\/70,
+    .final-mock-card .text-white\/75,
+    .final-mock-card .text-white\/55 {
+      color: var(--text-main) !important;
+    }
+    .final-mock-card .border-white\/10 {
+      border-color: rgba(15, 118, 110, 0.08) !important;
+    }
+    .final-mock-card .bg-white\/5 {
+      background: rgba(255, 255, 255, 0.72) !important;
+    }
+    body.dark-mode .profile-trigger,
+    body.dark-mode .profile-panel-secondary,
+    body.dark-mode .profile-name-input {
+      background: #1d2950;
+    }
+    body.dark-mode .primary-action {
+      background: var(--bg-sidebar);
+      color: #ffffff;
+    }
+    body.dark-mode .primary-action:hover {
+      background: #01211c;
+    }
+    body.dark-mode .final-mock-card {
+      background: linear-gradient(135deg, #183458, #18304f 55%, #15303a);
+      color: #ffffff;
+    }
+    body.dark-mode .brand-mark {
+      background: var(--bg-sidebar);
+      color: var(--accent);
+    }
+    body.dark-mode .final-mock-card p,
+    body.dark-mode .final-mock-card h3,
+    body.dark-mode .final-mock-card .text-white,
+    body.dark-mode .final-mock-card .text-white\/70,
+    body.dark-mode .final-mock-card .text-white\/75,
+    body.dark-mode .final-mock-card .text-white\/55 {
+      color: #ffffff !important;
+    }
+    body.dark-mode .final-mock-card .border-white\/10 {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    body.dark-mode .final-mock-card .bg-white\/5 {
+      background: rgba(255, 255, 255, 0.06) !important;
+    }
+    .chapter-search-input {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      padding: 12px 14px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .chapter-list-shell {
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .chapter-list-shell::-webkit-scrollbar {
+      width: 8px;
+    }
+    .chapter-list-shell::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, var(--text-dim) 45%, transparent);
+      border-radius: 999px;
+    }
+    .chapter-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 14px 16px;
+      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    .chapter-chip:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+    }
+    .chapter-chip.selected {
+      border-color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 12%, transparent);
+      box-shadow: 0 10px 22px color-mix(in srgb, var(--primary) 12%, transparent);
+    }
+    .chapter-chip-box {
+      display: inline-flex;
+      height: 20px;
+      width: 20px;
+      flex: 0 0 20px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid color-mix(in srgb, var(--text-dim) 50%, var(--border));
+      background: var(--bg-surface);
+      color: transparent;
+      transition: all 0.2s ease;
+    }
+    .chapter-chip.selected .chapter-chip-box {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: var(--bg-surface);
+    }
+    .chapter-chip-title {
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .chapter-chip-meta {
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .chapter-chip input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .chapter-empty {
+      border: 1px dashed color-mix(in srgb, var(--text-dim) 42%, transparent);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .chapter-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 14px;
+      background: var(--primary);
+      color: var(--bg-surface);
+      padding: 11px 16px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--primary) 16%, transparent);
+    }
+    .chapter-toggle-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+    body.dark-mode .chapter-search-input {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border-color: color-mix(in srgb, var(--border) 40%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 24%, transparent);
+    }
+    body.dark-mode .chapter-search-input::placeholder {
+      color: var(--text-dim);
+    }
+    body.dark-mode .chapter-chip {
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+    body.dark-mode .chapter-chip.selected {
+      background: color-mix(in srgb, var(--primary) 18%, transparent);
+      border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--bg-main) 18%, transparent);
+    }
+    body.dark-mode .chapter-chip-box {
+      background: var(--bg-surface);
+      border-color: color-mix(in srgb, var(--border) 45%, transparent);
+    }
+    body.dark-mode .chapter-chip-title {
+      color: var(--text-main);
+    }
+    body.dark-mode .chapter-chip-meta,
+    body.dark-mode .chapter-empty {
+      color: var(--text-muted);
+    }
+    body.dark-mode .chapter-toggle-btn {
+      background: var(--primary);
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--bg-main) 20%, transparent);
+    }
+  </style>
+</head>
+<body class="dashboard-page min-h-screen bg-background text-on-surface">
+  <header class="sticky top-0 z-50 bg-background">
+    <nav class="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-6 py-3">
+      <div class="font-headline text-xl font-bold tracking-tight text-primary">The Academic Edge</div>
+      <div class="relative flex items-center gap-4">
+        
+        <button id="profile-menu-button" class="profile-trigger flex items-center gap-3 rounded-full bg-surface-container-low px-3 py-2" type="button" aria-expanded="false">
+          <span id="profile-avatar" class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">L</span>
+          <span class="hidden font-semibold md:inline">Profile</span>
+        </button>
+        <section id="profile-menu-panel" class="hidden absolute right-0 top-16 z-50 w-80 rounded-3xl border border-outline-variant/20 bg-surface-container-lowest p-5 shadow-[0_24px_60px_rgba(25,28,30,0.12)]">
+          <div class="mb-5 flex items-start gap-4">
+            <span id="profile-avatar-panel" class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-lg font-bold text-white">L</span>
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant">Personal Profile</p>
+              <h2 id="profile-heading" class="mt-1 font-headline text-2xl font-bold text-primary">Welcome back</h2>
+              <p id="profile-status" class="mt-1 text-sm text-on-surface-variant"></p>
+            </div>
+          </div>
+          <label class="mb-4 block">
+            <span class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant">Your Name</span>
+            <input id="profile-name" class="profile-name-input w-full rounded-2xl border-none bg-surface-container-low px-4 py-3 focus:ring-2 focus:ring-primary" type="text" placeholder="Learner" />
+          </label>
+          <div class="grid grid-cols-1 gap-3">
+            <button id="save-profile" class="primary-action rounded-2xl px-4 py-3 font-semibold text-white" type="button">Save Profile</button>
+            <button id="change-exam" class="profile-panel-secondary rounded-2xl bg-surface-container-low px-4 py-3 font-semibold text-on-surface" type="button">Change Exam</button>
+            <button id="logout-button" class="profile-panel-secondary rounded-2xl bg-surface-container-low px-4 py-3 font-semibold text-on-surface" type="button">Logout</button>
+          </div>
+        </section>
+      </div>
+    </nav>
+    <div class="h-px w-full bg-surface-container-high"></div>
+  </header>
+  <div class="mx-auto flex max-w-screen-2xl">
+    <aside class="hidden w-64 shrink-0 flex-col bg-background lg:flex">
+      <div class="p-6">
+          <div class="mb-8 flex items-center space-x-3">
+            <div class="brand-mark flex h-12 w-12 items-center justify-center rounded-xl bg-primary-container text-primary-fixed">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+          </div>
+          <div>
+            <div class="font-headline font-bold leading-tight text-on-surface">RRB Aspirant</div>
+            <div class="text-xs text-on-surface-variant">AI preparation suite</div>
+          </div>
+        </div>
+        <nav class="space-y-1">
+          <a class="sidebar-tab-link active" data-nav-key="home" href="./dashboard.html"><span class="material-symbols-outlined">home</span><span>Home</span></a>
+          <a class="sidebar-tab-link" data-nav-key="history" href="./history.html"><span class="material-symbols-outlined">history</span><span>Test History</span></a>
+          <a class="sidebar-tab-link" data-nav-key="final-mock-history" href="./final-mock-history.html"><span class="material-symbols-outlined">timer</span><span>Final Mock History</span></a>
+          <a class="sidebar-tab-link" data-nav-key="bookmarks" href="./bookmarks.html"><span class="material-symbols-outlined">bookmark</span><span>Bookmarks</span></a>
+          <a class="sidebar-tab-link" data-nav-key="wrong-questions" href="./wrong-questions.html"><span class="material-symbols-outlined">rule</span><span>Wrong Questions</span></a>
+          <a class="sidebar-tab-link" data-nav-key="analysis" href="./analysis.html"><span class="material-symbols-outlined">analytics</span><span>Analysis</span></a>
+          <a class="sidebar-tab-link" data-nav-key="leaderboard" href="./leaderboard.html"><span class="material-symbols-outlined">leaderboard</span><span>Leaderboard</span></a>
+          <a class="sidebar-tab-link" data-nav-key="exam-dashboard" href="./exam-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>Exam Dashboard</span></a>
+        </nav>
+      </div>
+    </aside>
+    <main class="flex-1 space-y-8 p-6 lg:p-10">
+      <nav class="flex gap-3 overflow-x-auto pb-1 lg:hidden">
+        <a class="mobile-nav-link active" data-nav-key="home" href="./dashboard.html">Home</a>
+        <a class="mobile-nav-link" data-nav-key="history" href="./history.html">Test History</a>
+        <a class="mobile-nav-link" data-nav-key="final-mock-history" href="./final-mock-history.html">Final Mock History</a>
+        <a class="mobile-nav-link" data-nav-key="bookmarks" href="./bookmarks.html">Bookmarks</a>
+        <a class="mobile-nav-link" data-nav-key="wrong-questions" href="./wrong-questions.html">Wrong Questions</a>
+        <a class="mobile-nav-link" data-nav-key="analysis" href="./analysis.html">Analysis</a>
+        <a class="mobile-nav-link" data-nav-key="leaderboard" href="./leaderboard.html">Leaderboard</a>
+        <a class="mobile-nav-link" data-nav-key="exam-dashboard" href="./exam-dashboard.html">Exam Dashboard</a>
+      </nav>
+      <section>
+        <div class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">Operational Overview</span>
+            <h1 class="mt-1 font-headline text-4xl font-extrabold text-primary">Study Control Center</h1>
+            <div class="mt-4 inline-flex items-center gap-2 rounded-full bg-surface-container-low px-4 py-2 text-sm font-semibold text-on-surface">
+              <span class="material-symbols-outlined text-base text-primary">track_changes</span>
+              <span id="current-exam-indicator">Current Exam: RRB NTPC</span>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-12">
+          <div class="relative overflow-hidden rounded-[2rem] bg-surface-container-low p-8 md:col-span-8">
+            <form id="start-form" class="relative z-10">
+              <h2 class="mb-6 flex items-center gap-2 font-headline text-2xl font-bold"><span class="material-symbols-outlined text-primary">tune</span>Subject Test Configuration</h2>
+              <select id="exam" name="exam" class="hidden" aria-hidden="true" tabindex="-1">
+                <option value="RRB NTPC">RRB NTPC</option>
+                <option value="RRB Group D">RRB Group D</option>
+                <option value="RRB Technician Grade 3">RRB Technician Grade 3</option>
+              </select>
+              <input id="practice-type" name="practiceType" type="hidden" value="subject-test" />
+              <div class="mb-6 hidden rounded-[1.5rem] border border-outline-variant/20 bg-surface-container-lowest p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Practice Style</p>
+                    <p class="mt-1 text-sm text-on-surface-variant">Choose practice mode based on a single topic or multiple chapters.</p>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <button class="practice-type-btn active relative rounded-2xl border border-outline-variant/20 bg-surface-container-low px-4 py-4 text-left transition-all" data-practice-type="topic-practice" type="button">
+                    <span class="practice-type-check pointer-events-none absolute right-4 top-4 flex h-8 w-8 scale-90 items-center justify-center rounded-full bg-primary text-white opacity-0 transition-all">
+                      <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">check</span>
+                    </span>
+                    <span class="practice-type-title block pr-10 text-sm font-bold text-on-surface">Topic Practice</span>
+                    <span class="practice-type-copy mt-1 block pr-10 text-xs text-on-surface-variant">Single topic pe focused test.</span>
+                    <span class="practice-type-meta mt-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">Selected Style<span class="h-px w-12 bg-outline-variant/40"></span></span>
+                  </button>
+                  <button class="practice-type-btn relative rounded-2xl border border-outline-variant/20 bg-surface-container-low px-4 py-4 text-left transition-all" data-practice-type="chapter-practice" type="button">
+                    <span class="practice-type-check pointer-events-none absolute right-4 top-4 flex h-8 w-8 scale-90 items-center justify-center rounded-full bg-primary text-white opacity-0 transition-all">
+                      <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">check</span>
+                    </span>
+                    <span class="practice-type-title block pr-10 text-sm font-bold text-on-surface">Chapter Practice</span>
+                    <span class="practice-type-copy mt-1 block pr-10 text-xs text-on-surface-variant">Mixed subject test from multiple selected chapters.</span>
+                    <span class="practice-type-meta mt-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">Select Style<span class="h-px w-12 bg-outline-variant/40"></span></span>
+                  </button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                <label id="stage-field" class="hidden space-y-2">
+                  <span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Exam Stage</span>
+                  <select id="stage" name="stage" class="w-full rounded-xl border-none bg-surface-container-lowest px-4 py-3 focus:ring-2 focus:ring-primary">
+                    <option value="CBT 1">CBT 1</option>
+                    <option value="CBT 2">CBT 2</option>
+                  </select>
+                </label>
+                <label id="branch-field" class="hidden space-y-2">
+                  <span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Technical Branch</span>
+                  <select id="branch" name="branch" class="w-full rounded-xl border-none bg-surface-container-lowest px-4 py-3 focus:ring-2 focus:ring-primary">
+                    <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="Electrical Engineering">Electrical Engineering</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                  </select>
+                </label>
+                <label class="space-y-2"><span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Target Subject</span><select id="subject" name="subject" class="w-full rounded-xl border-none bg-surface-container-lowest px-4 py-3 focus:ring-2 focus:ring-primary"><option value="Mathematics">Mathematics</option><option value="Reasoning">Reasoning</option><option value="General Awareness">General Awareness</option><option value="General Science">General Science</option></select></label>
+
+                <label id="count-field" class="space-y-2"><span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Question Count</span><select id="count" name="count" class="w-full rounded-xl border-none bg-surface-container-lowest px-4 py-3 focus:ring-2 focus:ring-primary"><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option></select><span id="count-field-note" class="text-xs text-on-surface-variant">Choose how many questions you want in this test.</span></label>
+                <input type="hidden" id="mode" name="mode" value="subject-test" />
+                <label class="space-y-2"><span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Challenge Level</span><select id="difficulty" name="difficulty" class="w-full rounded-xl border-none bg-surface-container-lowest px-4 py-3 focus:ring-2 focus:ring-primary"><option value="basic">Basic</option><option value="intermediate" selected>Intermediate</option><option value="advanced">Advanced</option></select></label>
+              </div>
+              <p id="topic-hint" class="mt-4 text-sm text-on-surface-variant">A mixed test will be generated from all major topics in the selected subject.</p>
+              <div class="mt-6 rounded-[1.5rem] border border-outline-variant/20 bg-surface-container-lowest p-4">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Quick Continue</p>
+                    <p class="mt-1 text-sm text-on-surface-variant">Start the test immediately with the selected settings above.</p>
+                  </div>
+                  <button id="continue-to-test" class="primary-action inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white transition-all hover:scale-[1.02] active:scale-95" type="submit">
+                    <span>Continue to Test</span>
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+              <section id="chapter-practice-panel" class="mt-6 hidden rounded-[1.5rem] border border-outline-variant/20 bg-surface-container-lowest p-5">
+                <div class="mb-4">
+                  <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Chapter Practice Setup</p>
+                    <h3 class="mt-1 font-headline text-xl font-bold text-primary">Select chapters for a mixed subject test</h3>
+                  </div>
+                </div>
+                <div class="mb-4 rounded-[1.25rem] border border-outline-variant/20 bg-surface-container-low p-4">
+                  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p id="chapter-count" class="text-sm font-semibold text-on-surface">0 chapters selected</p>
+                    <p id="chapter-practice-hint" class="mt-1 text-xs text-on-surface-variant">A mixed practice paper will be created from the selected chapters.</p>
+                  </div>
+                  <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <button id="chapter-start-button" class="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white shadow-xl shadow-primary/15 transition-all disabled:cursor-not-allowed disabled:opacity-40" type="submit" disabled>
+                      <span id="chapter-start-label">Continue with Chapters</span>
+                      <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+                    </button>
+                    <button id="chapter-toggle-button" class="chapter-toggle-btn" type="button" aria-expanded="false">
+                      <span id="chapter-toggle-label">Open Chapter Selection</span>
+                      <span id="chapter-toggle-icon" class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">expand_more</span>
+                    </button>
+                  </div>
+                  </div>
+                </div>
+                <div id="chapter-selection-content" class="hidden">
+                  <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">Browse and choose chapters below</p>
+                    <button id="chapter-select-all" class="rounded-xl bg-surface-container-low px-4 py-2 text-sm font-semibold text-on-surface" type="button">Select All</button>
+                  </div>
+                  <div class="mb-4">
+                    <input id="chapter-search" class="chapter-search-input" type="search" placeholder="Search chapters..." />
+                  </div>
+                  <div class="chapter-list-shell">
+                    <div id="chapter-list" class="grid gap-3 sm:grid-cols-2"></div>
+                  </div>
+                  <div class="mt-5">
+                  <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Chapter Question Mode</p>
+                  <div class="mt-3 grid gap-3">
+                    <label class="flex items-start gap-3 rounded-2xl border border-outline-variant/20 bg-surface-container-low px-4 py-3">
+                      <input checked class="mt-1 h-4 w-4 accent-[var(--primary)]" name="chapterQuestionMode" type="radio" value="full-subject-mix" />
+                      <span>
+                        <span class="block text-sm font-bold text-on-surface">Full Subject Mix</span>
+                        <span class="block text-xs text-on-surface-variant">A test mixing all major topics of the selected subject.</span>
+                      </span>
+                    </label>
+                    <label class="flex items-start gap-3 rounded-2xl border border-outline-variant/20 bg-surface-container-low px-4 py-3">
+                      <input class="mt-1 h-4 w-4 accent-[var(--primary)]" name="chapterQuestionMode" type="radio" value="selected-chapters-only" />
+                      <span>
+                        <span class="block text-sm font-bold text-on-surface">Selected Chapters Only</span>
+                        <span class="block text-xs text-on-surface-variant">Questions only from the ticked chapters.</span>
+                      </span>
+                    </label>
+                    <label class="flex items-start gap-3 rounded-2xl border border-outline-variant/20 bg-surface-container-low px-4 py-3">
+                      <input class="mt-1 h-4 w-4 accent-[var(--primary)]" name="chapterQuestionMode" type="radio" value="balanced-sampler" />
+                      <span>
+                        <span class="block text-sm font-bold text-on-surface">Balanced Sampler</span>
+                        <span class="block text-xs text-on-surface-variant">Questions evenly spread across selected chapters.</span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                </div>
+              </section>
+              <section class="mt-6 hidden rounded-[1.5rem] border border-outline-variant/20 bg-surface-container-lowest p-5">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Weak Topic Auto-Drill</p>
+                    <h3 class="mt-1 font-headline text-xl font-bold text-primary">Drill weak spots</h3>
+                    <p id="weak-drill-copy" class="mt-1 text-sm text-on-surface-variant">Practice more tests to unlock weak-topic drill.</p>
+                  </div>
+                  <button id="start-weak-drill" class="primary-action inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold text-white transition-all disabled:cursor-not-allowed disabled:opacity-40" type="button" disabled>
+                    <span>Drill weak spots</span>
+                    <span id="weak-drill-badge" class="rounded-full bg-white/15 px-2 py-1 text-xs font-semibold">0</span>
+                  </button>
+                </div>
+              </section>
+            </form>
+            <div class="absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-primary-container/5 blur-3xl"></div>
+          </div>
+          <div class="flex flex-col gap-6 md:col-span-4">
+            <div class="final-mock-card relative overflow-hidden rounded-[2rem] border border-outline-variant/20 p-6 text-white shadow-[0_24px_60px_color-mix(in_srgb,var(--bg-main)_8%,transparent)]">
+              <div class="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-white/10 blur-3xl"></div>
+              <div class="absolute -bottom-16 -left-8 h-32 w-32 rounded-full bg-primary/10 blur-3xl"></div>
+              <div class="relative z-10">
+                <div class="final-mock-badge inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-primary/20">
+                  <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">stars</span>
+                </div>
+                <p class="mt-5 text-xs font-bold uppercase tracking-[0.24em] text-white/70">Exam Simulation</p>
+                <h3 class="mt-2 font-headline text-[1.7rem] font-extrabold leading-tight text-white">Final Full-Length Mock Test</h3>
+                <p class="mt-3 max-w-sm text-sm leading-6 text-white/75">Exact exam-pattern paper with timed full simulation, realistic pressure, and complete score review after submission.</p>
+                <div class="mt-5 grid grid-cols-3 gap-3">
+                  <div class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 backdrop-blur">
+                    <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/55">Mode</p>
+                    <p class="mt-1 text-sm font-bold text-white">Full Mock</p>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 backdrop-blur">
+                    <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/55">Timer</p>
+                    <p class="mt-1 text-sm font-bold text-white">90 Min</p>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 backdrop-blur">
+                    <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/55">Style</p>
+                    <p class="mt-1 text-sm font-bold text-white">Exam Like</p>
+                  </div>
+                </div>
+                <div class="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <label class="space-y-2">
+                    <span class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/55">Mock Level</span>
+                    <select id="final-mock-difficulty" class="w-full rounded-xl border-none bg-white/10 px-4 py-3 text-sm font-semibold text-white focus:ring-2 focus:ring-primary">
+                      <option value="basic">Easy Level</option>
+                      <option value="intermediate" selected>Intermediate Level</option>
+                      <option value="advanced">Advanced Level</option>
+                    </select>
+                  </label>
+                </div>
+                <button id="start-final-mock" class="primary-action mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3.5 font-bold text-white transition-all hover:scale-[1.01] hover:opacity-95 active:scale-95" type="button">
+                  <span>Launch Exam</span>
+                  <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+            <div class="rounded-[2rem] border border-outline-variant/20 bg-surface-container-lowest p-6">
+              <h3 class="mb-4 text-sm font-bold uppercase tracking-widest text-on-surface-variant">Last Exam Snapshot</h3>
+              <div id="last-attempt-card"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="./js/app.js?v=20260513c"></script>
+  <script type="module">
+    import { TOPICS } from "./js/rrb-syllabus-data.js?v=20260513c";
+
+    (() => {
+      const allowedExams = ["RRB NTPC", "RRB Group D", "RRB Technician Grade 3"];
+      const examIndicator = document.querySelector("#current-exam-indicator");
+      const examSelect = document.querySelector("#exam");
+      const stageSelect = document.querySelector("#stage");
+      const branchField = document.querySelector("#branch-field");
+      const branchSelect = document.querySelector("#branch");
+      const practiceTypeInput = document.querySelector("#practice-type");
+      const practiceTypeButtons = Array.from(document.querySelectorAll("[data-practice-type]"));
+
+      const chapterPracticePanel = document.querySelector("#chapter-practice-panel");
+      const subjectSelect = document.querySelector("#subject");
+      const topicSelect = document.querySelector("#topic");
+      const topicHint = document.querySelector("#topic-hint");
+
+      const normalizeLookupText = (value) =>
+        String(value || "")
+          .toLowerCase()
+          .replace(/&/g, "and")
+          .replace(/[^a-z0-9]+/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+
+      const normalizeTopic = (value) =>
+        String(value || "")
+          .replace(/â€”/g, " - ")
+          .replace(/–/g, "-")
+          .replace(/\s+/g, " ")
+          .trim();
+
+      const normalizeMap = (map) => Object.fromEntries(
+        Object.entries(map || {}).map(([subject, topics]) => [
+          subject,
+          Array.isArray(topics) ? topics.map(normalizeTopic) : []
+        ])
+      );
+
+      const readJson = (key, fallback) => {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch {
+          return fallback;
+        }
+      };
+
+      const normalizeSubject = (value) =>
+        String(value || "")
+          .replace(/Ã¢â‚¬â€/g, " - ")
+          .replace(/â€”/g, " - ")
+          .replace(/â€“/g, "-")
+          .replace(/\s+/g, " ")
+          .trim();
+
+      const sanitizeExam = (examName) => allowedExams.includes(examName) ? examName : "RRB NTPC";
+      const profile = readJson("rrbQuizProfile", {});
+      const currentUser = readJson("rrbCurrentUser", {});
+      const currentExam = sanitizeExam(profile.preferredExam || currentUser.preferredExam || localStorage.getItem("selectedExam") || "RRB NTPC");
+      const currentStage = profile.preferredStage || currentUser.preferredStage || "";
+      const currentBranch = profile.preferredBranch || currentUser.preferredBranch || "Civil Engineering";
+
+      const baseMap = Object.fromEntries(
+        Object.entries(TOPICS || {}).map(([exam, subjects]) => [
+          exam,
+          Object.fromEntries(
+            Object.entries(normalizeMap(subjects)).map(([subject, topics]) => [normalizeSubject(subject), topics])
+          )
+        ])
+      );
+
+      const getActiveMap = () => {
+        const activeMap = baseMap[currentExam] || baseMap["RRB NTPC"] || {};
+        const selectedBranch = branchSelect?.value || currentBranch;
+        const shouldFilterJeTechnical = false;
+        if (!shouldFilterJeTechnical) {
+          return activeMap;
+        }
+
+        const targetTechnical = `Technical - ${selectedBranch}`;
+        return Object.fromEntries(
+          Object.entries(activeMap).filter(([subject]) => !subject.startsWith("Technical - ") || subject === targetTechnical)
+        );
+      };
+
+      const resolveSubject = (subject) => {
+        const activeMap = getActiveMap();
+        if (activeMap[subject]) {
+          return subject;
+        }
+        const normalizedTarget = normalizeLookupText(subject);
+        return Object.keys(activeMap).find((key) => normalizeLookupText(key) === normalizedTarget) || Object.keys(activeMap)[0] || "";
+      };
+
+      const fillSubjects = () => {
+        if (!subjectSelect) return;
+        const activeMap = getActiveMap();
+        const subjects = Object.keys(activeMap);
+        if (!subjects.length) return;
+        subjectSelect.replaceChildren(
+          ...subjects.map((subject) => {
+            const option = document.createElement("option");
+            option.value = subject;
+            option.textContent = normalizeSubject(subject);
+            return option;
+          })
+        );
+      };
+
+      const fillTopics = () => {
+        if (!topicSelect || !subjectSelect) return;
+        const activeMap = getActiveMap();
+        const subjectKey = resolveSubject(subjectSelect.value);
+        const topics = activeMap[subjectKey] || [];
+        topicSelect.replaceChildren(
+          ...topics.map((topic) => {
+            const option = document.createElement("option");
+            option.value = topic;
+            option.textContent = topic;
+            return option;
+          })
+        );
+        if (topics.length) {
+          topicSelect.value = topics[0];
+        }
+        if (topicHint) {
+          topicHint.textContent = `Showing topics for ${currentExam}${currentStage ? ` ${currentStage}` : ""} - ${subjectKey}.`;
+        }
+      };
+
+      const syncPracticeTypeUI = () => {
+        const currentType = practiceTypeInput?.value || "topic-practice";
+        const isChapterPractice = currentType === "chapter-practice";
+
+        practiceTypeButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.practiceType === currentType);
+        });
+
+        topicField?.classList.toggle("hidden", isChapterPractice);
+        chapterPracticePanel?.classList.toggle("hidden", !isChapterPractice);
+
+        if (topicSelect) {
+          topicSelect.disabled = isChapterPractice;
+        }
+
+        if (topicHint) {
+          topicHint.textContent = isChapterPractice
+            ? "A mixed test will be created from the selected chapters."
+            : `Showing topics for ${currentExam}${currentStage ? ` ${currentStage}` : ""} - ${resolveSubject(subjectSelect?.value || "")}.`;
+        }
+      };
+
+      if (examSelect) {
+        examSelect.value = currentExam;
+      }
+      if (stageSelect && currentStage) {
+        stageSelect.value = currentStage;
+      }
+      if (branchSelect) {
+        branchSelect.value = currentBranch;
+      }
+      if (branchField) {
+        branchField.classList.add("hidden");
+      }
+      if (examIndicator) {
+        examIndicator.textContent = `Current Exam: ${currentExam}${currentStage ? ` ${currentStage}` : ""}`;
+      }
+
+      fillSubjects();
+      fillTopics();
+      syncPracticeTypeUI();
+      subjectSelect?.addEventListener("change", fillTopics);
+      practiceTypeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (practiceTypeInput) {
+            practiceTypeInput.value = button.dataset.practiceType || "topic-practice";
+          }
+          syncPracticeTypeUI();
+        });
+      });
+      branchSelect?.addEventListener("change", () => {
+        fillSubjects();
+        fillTopics();
+        syncPracticeTypeUI();
+        if (examIndicator) {
+          examIndicator.textContent = `Current Exam: ${currentExam}${currentStage ? ` ${currentStage}` : ""}`;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+
+
+
