@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>The Academic Edge | Performance Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="./css/app-shell.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            background: "var(--bg-main)",
+            primary: "var(--primary)",
+            "primary-container": "var(--primary-soft)",
+            "primary-fixed": "var(--accent)",
+            "surface-container-lowest": "var(--bg-surface)",
+            "surface-container-low": "var(--bg-card)",
+            "surface-container-high": "var(--bg-elevated)",
+            "outline-variant": "var(--border)",
+            "on-surface": "var(--text-main)",
+            "on-surface-variant": "var(--text-muted)"
+          },
+          fontFamily: {
+            headline: ["Manrope"],
+            body: ["Inter"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    h1, h2, h3 { font-family: "Manrope", sans-serif; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      font: inherit;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      cursor: pointer;
+    }
+    body {
+      background: #f5f7fb;
+    }
+    .analytics-item {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--bg-surface);
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .analytics-item strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .analytics-item p {
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+    .analytics-card {
+      background: #ffffff;
+    }
+    .analytics-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .insight-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .insight-strong {
+      border-color: rgba(5, 150, 105, 0.18);
+      background: var(--correct-bg);
+    }
+    .insight-strong .insight-pill,
+    .insight-pill.insight-strong {
+      background: var(--accent-light);
+      color: var(--correct-border);
+    }
+    .insight-improving {
+      border-color: rgba(245, 158, 11, 0.18);
+      background: #fffbeb;
+    }
+    .insight-improving .insight-pill,
+    .insight-pill.insight-improving {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .insight-weak {
+      border-color: rgba(239, 68, 68, 0.18);
+      background: var(--wrong-bg);
+    }
+    .insight-weak .insight-pill,
+    .insight-pill.insight-weak {
+      background: color-mix(in srgb, var(--wrong-border) 18%, transparent);
+      color: var(--wrong-border);
+    }
+    .chart-row {
+      display: grid;
+      grid-template-columns: minmax(130px, 190px) 1fr auto;
+      align-items: center;
+      gap: 14px;
+    }
+    .chart-label {
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .chart-bar-track {
+      height: 14px;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--bg-elevated);
+    }
+    .chart-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+    .chart-bar-fill.chart-good { background: var(--correct-border); }
+    .chart-bar-fill.chart-mid { background: var(--primary); }
+    .chart-bar-fill.chart-low { background: var(--wrong-border); }
+    .chart-value {
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .history-empty,
+    .retry-card {
+      border-radius: 20px;
+      background: #eef2f8;
+      border: 1px solid var(--border);
+      padding: 20px;
+    }
+    .history-empty strong,
+    .retry-card strong {
+      display: block;
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .history-empty span,
+    .retry-card p {
+      display: block;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+    .bookmark-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .primary-btn,
+    .chip-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-weight: 800;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .primary-btn {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 16px;
+    }
+    .chip-btn {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+    }
+    .review-item {
+      position: relative;
+      padding: 24px;
+      background: var(--bg-surface);
+    }
+    .review-item.correct {
+      border-left: 4px solid var(--correct-border);
+    }
+    .review-item.incorrect {
+      border-left: 4px solid var(--wrong-border);
+    }
+    .review-item h3 {
+      color: var(--text-main);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.5;
+      margin: 8px 0 14px;
+      padding-right: 120px;
+    }
+    .review-item p {
+      color: var(--text-main);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+    .review-item strong {
+      font-size: inherit;
+      letter-spacing: normal;
+      text-transform: none;
+      margin: 0;
+      display: inline;
+    }
+    .wrong-answer-list {
+      display: grid;
+      gap: 16px;
+    }
+    .wrong-answer-card {
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      padding: 20px;
+    }
+    .wrong-answer-card h3 {
+      margin: 0 0 14px;
+      color: var(--text-main);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+    .wrong-answer-option {
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #eef2f8;
+      padding: 12px 14px;
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .wrong-answer-option.user-wrong {
+      border-color: var(--wrong-border);
+      background: var(--wrong-bg);
+      color: var(--wrong-border);
+    }
+    .wrong-answer-option.correct-answer {
+      border-color: var(--correct-border);
+      background: var(--correct-bg);
+      color: var(--correct-border);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .badge.correct {
+      background: var(--accent-light);
+      color: var(--correct-border);
+    }
+    .badge.incorrect {
+      background: color-mix(in srgb, var(--wrong-border) 16%, transparent);
+      color: var(--wrong-border);
+    }
+    .empty-card {
+      border-radius: 20px;
+      border: 1px dashed var(--border);
+      background: var(--bg-surface);
+      padding: 22px;
+    }
+    .empty-card strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .empty-card p,
+    .empty-card span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    body.dark-mode {
+      background: var(--bg-main) !important;
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .bg-background,
+    body.dark-mode header {
+      background-color: var(--bg-main) !important;
+    }
+    body.dark-mode .bg-surface-container-lowest,
+    body.dark-mode .bg-surface-container-low,
+    body.dark-mode .bg-surface-container-high,
+    body.dark-mode .analytics-item,
+    body.dark-mode .empty-card,
+    body.dark-mode .review-item {
+      background: var(--bg-surface) !important;
+      border-color: var(--border) !important;
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .analytics-card {
+      background: var(--bg-surface) !important;
+    }
+    body.dark-mode .text-on-surface,
+    body.dark-mode .text-primary {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .text-on-surface-variant,
+    body.dark-mode .analytics-item p,
+    body.dark-mode .empty-card p,
+    body.dark-mode .empty-card span,
+    body.dark-mode .review-item p,
+    body.dark-mode .chart-value,
+    body.dark-mode .wrong-answer-card p {
+      color: var(--text-muted) !important;
+    }
+    body.dark-mode .wrong-answer-card,
+    body.dark-mode .wrong-answer-option {
+      background: var(--bg-surface) !important;
+      border-color: var(--border) !important;
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .wrong-answer-card h3 {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .wrong-answer-option.user-wrong {
+      background: var(--wrong-bg) !important;
+      border-color: var(--wrong-border) !important;
+      color: var(--wrong-border) !important;
+    }
+    body.dark-mode .wrong-answer-option.correct-answer {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct-border) !important;
+      color: var(--correct-border) !important;
+    }
+    body.dark-mode .chart-bar-track {
+      background: var(--bg-elevated);
+    }
+    body.dark-mode .theme-toggle {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-on-surface">
+  <header class="sticky top-0 z-50 bg-background">
+    <div class="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-6 py-3">
+      <div class="text-xl font-bold tracking-tight text-primary">The Academic Edge</div>
+      <nav class="hidden items-center gap-8 md:flex">
+        <a class="text-on-surface-variant hover:text-primary" href="./dashboard.html">Dashboard</a>
+        <a class="text-on-surface-variant hover:text-primary" href="./quiz.html">Practice</a>
+        <a class="border-b-2 border-primary pb-1 font-semibold text-primary" href="./score.html">Analysis</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        
+        <a class="rounded-xl bg-surface-container-low px-4 py-2 font-semibold text-on-surface" href="./dashboard.html">Back to Dashboard</a>
+      </div>
+    </div>
+    <div class="h-px w-full bg-surface-container-high"></div>
+  </header>
+  <main class="mx-auto max-w-screen-2xl px-6 py-8 pb-24">
+    <div class="mb-10">
+      <p class="mb-2 text-xs uppercase tracking-widest text-on-surface-variant">Detailed Performance Report</p>
+      <h1 class="text-4xl font-extrabold tracking-tight text-primary">Exam Analysis</h1>
+      <p id="score-summary" class="mt-2 max-w-2xl text-on-surface-variant">Your result summary will appear here.</p>
+    </div>
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+      <div class="space-y-8 lg:col-span-4">
+        <section class="rounded-xl bg-surface-container-lowest p-8 text-center">
+          <div class="score-ring relative mx-auto mb-6 flex h-48 w-48 items-center justify-center rounded-full border-[12px] border-outline-variant/30">
+            <div class="absolute inset-0 rounded-full border-[12px] border-primary" style="clip-path: inset(0 50% 0 0);"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center rounded-full bg-surface-container-lowest px-4 py-6">
+              <span id="score-value" class="text-5xl font-black text-primary">0%</span>
+              <span class="text-sm uppercase tracking-wider text-on-surface-variant">Accuracy</span>
+            </div>
+          </div>
+          <div id="top-section-summary" class="grid gap-4"></div>
+        </section>
+        <section id="score-metrics" class="grid grid-cols-2 gap-4">
+          <article class="empty-card col-span-2">
+            <strong>Score metrics will appear here</strong>
+            <span>Complete a quiz and submit it to see accuracy, net score, wrong answers, and more.</span>
+          </article>
+        </section>
+        <section id="weakest-section-card" class="rounded-xl bg-primary p-8 text-white">
+          <article class="retry-card">
+            <strong>Weakest subject retry will appear here</strong>
+            <p>Quiz complete hone ke baad yahan dashboard retry suggestion dikhega.</p>
+          </article>
+        </section>
+      </div>
+      <div class="space-y-8 lg:col-span-8">
+        <section class="rounded-xl bg-surface-container-lowest p-8">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-primary">Subject-wise Performance</h2>
+            <p class="text-sm text-on-surface-variant">Score comparison across core areas</p>
+          </div>
+          <div id="subject-chart" class="space-y-5">
+            <article class="empty-card">
+              <strong>No performance data yet</strong>
+              <span>Section-wise accuracy bars test submit karne ke baad yahan show honge.</span>
+            </article>
+          </div>
+        </section>
+        <section id="section-insights" class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <article class="empty-card md:col-span-2">
+            <strong>Section insights will appear here</strong>
+            <span>Strong, improving, aur needs work analysis result ke saath load hoga.</span>
+          </article>
+        </section>
+        <section class="rounded-xl bg-surface-container-lowest p-8">
+          <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-bold text-primary">Wrong Questions Review</h2>
+              <p class="text-sm text-on-surface-variant">Sirf galat gaye hue questions ko alag se revise aur retry karo.</p>
+            </div>
+            <button id="review-wrong-answers" class="chip-btn" type="button">Review Wrong Answers</button>
+          </div>
+          <div id="wrong-answers-panel" class="hidden">
+            <div class="mb-4 flex flex-wrap gap-3">
+              <button id="practice-wrong-questions" class="primary-btn" type="button">Practice These Again</button>
+            </div>
+            <div id="wrong-answers-list" class="wrong-answer-list">
+              <article class="empty-card">
+                <strong>No wrong answers for this attempt</strong>
+                <span>Perfect attempt hone par yahan koi question show nahi hoga.</span>
+              </article>
+            </div>
+          </div>
+        </section>
+        <section class="rounded-xl bg-surface-container-lowest p-8">
+          <div class="mb-6"><h2 class="text-xl font-bold text-primary">Section Breakdown</h2></div>
+          <div id="section-metrics" class="grid gap-4 md:grid-cols-2">
+            <article class="empty-card md:col-span-2">
+              <strong>Section breakdown not available yet</strong>
+              <span>Quiz result generate hone ke baad correct, wrong, unanswered aur accuracy yahan dikhegi.</span>
+            </article>
+          </div>
+        </section>
+        <section class="overflow-hidden rounded-xl bg-surface-container-lowest">
+          <div class="flex items-center justify-between bg-surface-container-low/60 p-6">
+            <h2 class="text-xl font-bold text-primary">Question Review</h2>
+          </div>
+          <div id="review-list" class="divide-y divide-outline-variant/10">
+            <article class="empty-card m-6">
+              <strong>Question review will appear here</strong>
+              <span>Submit a quiz to review answers, explanations, and bookmarks.</span>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/quiz.js"></script>
+</body>
+</html>
