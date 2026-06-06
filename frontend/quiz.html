@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Exam Interface | The Academic Edge</title>
+  <script>
+    (() => {
+      const buildToken = "20260513c";
+      const url = new URL(window.location.href);
+      if (url.searchParams.get("v") !== buildToken) {
+        url.searchParams.set("v", buildToken);
+        window.location.replace(url.toString());
+      }
+    })();
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="./css/app-shell.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            background: "var(--bg-main)",
+            primary: "var(--primary)",
+            "primary-container": "var(--primary-soft)",
+            "primary-fixed": "var(--accent)",
+            "surface-container-lowest": "var(--bg-surface)",
+            "surface-container-low": "var(--bg-card)",
+            "surface-container": "var(--bg-card)",
+            "surface-container-high": "var(--bg-elevated)",
+            "surface-container-highest": "var(--bg-elevated)",
+            "outline-variant": "var(--border)",
+            "on-surface": "var(--text-main)",
+            "on-surface-variant": "var(--text-muted)",
+            secondary: "var(--primary)",
+            "secondary-container": "var(--primary-soft)",
+            "on-secondary-container": "var(--primary)",
+            "tertiary-container": "var(--bg-elevated)",
+            "on-tertiary-container": "var(--warning)",
+            error: "var(--error)",
+            "error-container": "var(--bg-elevated)"
+          },
+          fontFamily: {
+            headline: ["Manrope"],
+            body: ["Inter"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    h1, h2, h3, .brand-font { font-family: "Manrope", sans-serif; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font: inherit;
+      font-weight: 700;
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--bg-main) 8%, transparent);
+      cursor: pointer;
+    }
+    body {
+      background: #f5f7fb;
+    }
+    .palette-btn {
+      display: flex;
+      min-height: 56px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      border-radius: 14px;
+      transition: all 0.2s ease;
+    }
+    .palette-btn small {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .option-card.selected { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, transparent); }
+    .option-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--bg-surface);
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .option-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .option-card input {
+      accent-color: var(--primary);
+    }
+    .option-card span {
+      color: var(--text-main);
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .option-card.revealed {
+      cursor: default;
+    }
+    .option-card.revealed:hover {
+      transform: none;
+    }
+    .option-card.correct {
+      border-color: var(--success);
+      background: color-mix(in srgb, var(--success) 15%, transparent);
+    }
+    .option-card.correct span {
+      color: var(--success);
+    }
+    .option-card.incorrect {
+      border-color: var(--error);
+      background: color-mix(in srgb, var(--error) 15%, transparent);
+    }
+    .option-card.incorrect span {
+      color: var(--error);
+    }
+    .answer-feedback {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px 20px;
+    }
+    .answer-feedback.correct {
+      background: color-mix(in srgb, var(--success) 15%, transparent);
+      border-color: var(--success);
+    }
+    .answer-feedback.incorrect {
+      background: color-mix(in srgb, var(--error) 15%, transparent);
+      border-color: var(--error);
+    }
+    .palette-btn.current { background: color-mix(in srgb, var(--primary) 15%, transparent); border: 2px solid var(--primary); color: var(--primary); font-weight: 800; }
+    .palette-btn.answered { background: var(--bg-elevated); color: var(--text-main); }
+    .palette-btn.review { background: var(--warning); color: var(--bg-surface); }
+    .palette-btn.review-answered { background: var(--primary); color: var(--bg-surface); }
+    .palette-btn.unanswered { background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-dim); }
+    .timer-warn { background: color-mix(in srgb, var(--warning) 18%, transparent); color: var(--warning); }
+    .timer-danger { background: color-mix(in srgb, var(--error) 18%, transparent); color: var(--error); }
+    .summary-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 18px;
+      background: var(--bg-surface);
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+    }
+    .summary-box strong {
+      color: var(--text-main);
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .summary-box span {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .section-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-radius: 18px;
+      background: var(--bg-surface);
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+    }
+    .section-pill strong {
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .section-pill span {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .section-jump-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      border-radius: 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      transition: all 0.2s ease;
+    }
+    .section-jump-btn strong {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-jump-btn span {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+    .section-jump-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .section-jump-btn.active { background: var(--primary); color: var(--bg-surface); }
+    .chip-btn.active { background: var(--primary); color: var(--bg-surface); }
+    body.exam-mode header {
+      background: #ffffff;
+      box-shadow: 0 8px 30px color-mix(in srgb, var(--bg-main) 5%, transparent);
+    }
+    body.exam-mode #timer-pill {
+      background: var(--primary);
+      color: var(--bg-surface);
+    }
+    body.exam-mode #submit-test-button {
+      background: var(--primary);
+      color: var(--bg-surface);
+    }
+    body.final-mock-mode #section-jump-panel {
+      display: flex !important;
+    }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in srgb, var(--bg-main) 58%, transparent);
+      padding: 24px;
+    }
+    .modal-card {
+      width: min(100%, 560px);
+      border-radius: 28px;
+      background: #ffffff;
+      padding: 28px;
+      box-shadow: 0 30px 80px color-mix(in srgb, var(--bg-main) 18%, transparent);
+    }
+    .modal-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .modal-metric {
+      border-radius: 18px;
+      background: #eef2f8;
+      padding: 14px 16px;
+    }
+    .modal-metric strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .modal-metric span {
+      display: block;
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    body.dark-mode {
+      background: #1a1a2e !important;
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .bg-background,
+    body.dark-mode header {
+      background-color: var(--bg-main) !important;
+    }
+    body.dark-mode .bg-surface-container-lowest,
+    body.dark-mode .bg-surface-container-low,
+    body.dark-mode .bg-surface-container,
+    body.dark-mode .bg-surface-container-high,
+    body.dark-mode .bg-surface-container-highest,
+    body.dark-mode .modal-card,
+    body.dark-mode .modal-metric,
+    body.dark-mode .summary-box,
+    body.dark-mode .section-pill,
+    body.dark-mode .section-jump-btn,
+    body.dark-mode .answer-feedback,
+    body.dark-mode .option-card {
+      background: var(--bg-card) !important;
+      border-color: var(--border) !important;
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .text-on-surface,
+    body.dark-mode .text-primary {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .text-on-surface-variant,
+    body.dark-mode #tip-body,
+    body.dark-mode #mode-context-body,
+    body.dark-mode #answer-feedback-text,
+    body.dark-mode .summary-box span,
+    body.dark-mode .section-pill span,
+    body.dark-mode .section-jump-btn span {
+      color: var(--text-muted) !important;
+    }
+    body.dark-mode .option-card span,
+    body.dark-mode .summary-box strong,
+    body.dark-mode .section-pill strong,
+    body.dark-mode .section-jump-btn strong,
+    body.dark-mode .modal-metric strong {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .option-card.selected {
+      border-color: var(--primary) !important;
+      background: color-mix(in srgb, var(--primary) 16%, transparent) !important;
+    }
+    body.dark-mode .option-card.correct {
+      background: color-mix(in srgb, var(--success) 18%, var(--bg-card)) !important;
+      border-color: var(--success) !important;
+    }
+    body.dark-mode .option-card.correct span {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .option-card.incorrect {
+      background: color-mix(in srgb, var(--error) 18%, var(--bg-card)) !important;
+      border-color: var(--error) !important;
+    }
+    body.dark-mode .option-card.incorrect span {
+      color: var(--text-main) !important;
+    }
+    body.dark-mode .palette-btn.unanswered {
+      background: var(--bg-surface);
+      border-color: var(--border);
+      color: var(--text-main);
+    }
+    body.dark-mode .theme-toggle {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+
+    /* Premium tactile transitions and animations */
+    .option-card {
+      transition: border-color 0.22s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .option-card:hover {
+      border-color: var(--primary) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 8%, transparent) !important;
+    }
+    .option-card:active {
+      transform: translateY(-0.5px) !important;
+    }
+
+    .section-jump-btn {
+      transition: border-color 0.22s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .section-jump-btn:hover {
+      border-color: var(--primary) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 14px color-mix(in srgb, var(--primary) 6%, transparent) !important;
+    }
+    .section-jump-btn:active {
+      transform: translateY(-0.5px) !important;
+    }
+
+    @keyframes questionChange {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .question-anim {
+      animation: questionChange 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .solution-animation {
+      animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Modal transitions */
+    #submit-modal {
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      background: color-mix(in srgb, var(--bg-main) 65%, transparent);
+    }
+    #submit-modal:not(.hidden) {
+      display: flex !important;
+      animation: overlayFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    #submit-modal:not(.hidden) .modal-card {
+      animation: cardZoomIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes overlayFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes cardZoomIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+  </style>
+</head>
+<body class="flex min-h-screen flex-col bg-background text-on-surface">
+  <header class="sticky top-0 z-50 border-b border-outline-variant/20 bg-background">
+    <div class="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-6 py-3">
+      <div class="flex items-center gap-8">
+        <span class="brand-font text-xl font-bold tracking-tight text-primary">The Academic Edge</span>
+        <div class="hidden items-center gap-6 md:flex">
+          <div class="flex flex-col">
+            <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Exam</span>
+            <span id="quiz-heading" class="text-sm font-bold text-on-surface">Preparing your quiz...</span>
+          </div>
+          <div class="h-8 w-px bg-outline-variant/20"></div>
+          <div class="flex flex-col">
+            <span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Question</span>
+            <span id="question-index" class="text-sm font-bold text-primary">Question 1</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        
+        <span id="mode-pill" class="rounded-xl bg-surface-container-low px-4 py-2 text-sm font-semibold text-on-surface">Practice</span>
+        <span id="difficulty-pill" class="rounded-xl bg-surface-container-low px-4 py-2 text-sm font-semibold text-on-surface">Intermediate</span>
+        <span id="timer-pill" class="rounded-xl bg-primary-container px-4 py-2 text-sm font-bold text-white">No timer</span>
+        <span id="progress-pill" class="rounded-xl bg-surface-container-low px-4 py-2 text-sm font-semibold text-on-surface">0 / 0</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="mode-context-banner" class="mx-auto mt-6 hidden w-full max-w-screen-2xl px-6">
+    <div class="rounded-2xl border border-outline-variant/20 bg-surface-container-lowest px-5 py-4 shadow-[0_10px_26px_color-mix(in_srgb,var(--bg-main)_6%,transparent)]">
+      <p id="mode-context-title" class="text-sm font-extrabold uppercase tracking-widest text-primary">Exam Mode Active</p>
+      <p id="mode-context-body" class="mt-2 text-sm leading-relaxed text-on-surface-variant">Section-wise mock configuration is active.</p>
+    </div>
+  </section>
+
+  <main class="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col lg:flex-row">
+    <section id="loading-state" class="mx-6 my-10 flex-1 rounded-3xl bg-surface-container-low p-10 text-center">
+      <strong class="block text-2xl font-bold text-primary">Preparing your quiz...</strong>
+      <span class="mt-3 block text-on-surface-variant">AI se questions la rahe hain...</span>
+    </section>
+
+    <section id="error-state" class="mx-6 my-10 hidden flex-1 rounded-3xl bg-surface-container-low p-10 text-center">
+      <strong class="block text-2xl font-bold text-primary">Failed to load questions</strong>
+      <span id="error-message" class="mt-3 block text-on-surface-variant">Please try again.</span>
+      <div class="mt-6">
+        <a class="inline-flex rounded-xl bg-surface-container-high px-5 py-3 font-semibold text-on-surface" href="./dashboard.html">Back to Dashboard</a>
+      </div>
+    </section>
+
+    <section id="quiz-form" class="hidden flex flex-1 flex-col lg:flex-row lg:items-start">
+      <section class="min-w-0 flex-1 p-6 lg:p-10">
+        <div id="section-jump-panel" class="mb-6 hidden flex-wrap items-center gap-2">
+          <span id="current-section-title" class="mr-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Current Section</span>
+          <div id="section-jump-list" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <div class="rounded-3xl bg-surface-container-lowest p-8 shadow-[0_12px_40px_color-mix(in_srgb,var(--bg-main)_6%,transparent)]">
+          <div class="mb-8 flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">Live Session</p>
+              <h1 id="question-text" class="mt-2 text-2xl font-bold leading-tight text-primary lg:text-3xl">Question text</h1>
+            </div>
+            <button id="bookmark-button" class="rounded-xl bg-surface-container-low px-4 py-3 text-sm font-semibold text-on-surface transition hover:bg-surface-container-high" type="button">Bookmark This Question</button>
+          </div>
+
+          <div id="options-list" class="grid gap-4"></div>
+
+          <div id="answer-feedback" class="answer-feedback correct mt-6 hidden">
+            <p id="answer-feedback-status" class="text-sm font-extrabold uppercase tracking-widest text-primary">Answer Review</p>
+            <p id="answer-feedback-text" class="mt-3 text-sm leading-relaxed text-on-surface-variant">Explanation will appear here after you answer.</p>
+          </div>
+
+          <div class="mt-8 rounded-2xl bg-surface-container-low p-5">
+            <div class="flex items-start gap-4">
+              <span class="material-symbols-outlined text-primary">lightbulb</span>
+              <div>
+                <h3 id="tip-title" class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Practice Tip</h3>
+                <p id="tip-body" class="mt-2 text-sm leading-relaxed text-on-surface-variant">Practice mode me question ko dhyan se padho, options eliminate karo, aur step-by-step solve karo. Final mock me speed aur accuracy dono important hain.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-outline-variant/10 pt-6">
+          <div class="flex flex-wrap gap-3">
+            <button id="review-button" class="inline-flex items-center gap-2 rounded-xl bg-surface-container-low px-5 py-3 font-semibold text-primary" type="button">
+              <span class="material-symbols-outlined text-sm">bookmark</span>
+              Mark for Review
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <button id="save-next-button" class="hidden rounded-xl bg-primary px-8 py-3 font-bold text-white shadow-lg shadow-primary/10" type="button">Continue</button>
+            <button id="submit-test-button" class="rounded-xl bg-secondary-container px-6 py-3 font-black text-on-secondary-container shadow-sm" type="button">Submit Test</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="w-full border-l-0 border-outline-variant/10 bg-surface-container-low p-6 lg:sticky lg:top-24 lg:min-h-[calc(100vh-8rem)] lg:w-[360px] lg:max-w-[360px] lg:shrink-0 lg:self-start lg:overflow-y-auto lg:border-l">
+        <div class="rounded-2xl bg-surface-container-lowest p-5">
+          <div class="mb-4 flex items-center justify-between">
+            <span class="text-sm font-bold text-primary">Overall Progress</span>
+            <span id="quiz-summary-progress" class="text-xs font-bold text-primary">0%</span>
+          </div>
+          <div class="h-2 w-full overflow-hidden rounded-full bg-surface-container-high">
+            <div id="quiz-summary-bar" class="h-full bg-gradient-to-r from-secondary to-primary-fixed" style="width:0%"></div>
+          </div>
+        </div>
+
+        <section class="mt-6">
+          <div class="mb-4 flex items-center justify-between gap-4">
+            <h3 class="font-headline text-lg font-bold text-primary">Question Palette</h3>
+            <span id="palette-status" class="text-xs font-semibold text-on-surface-variant">0 answered • 0 review</span>
+          </div>
+          <div id="question-palette" class="grid grid-cols-5 gap-3"></div>
+          <div class="mt-5 grid grid-cols-2 gap-3 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+            <div class="flex items-center gap-2"><div class="h-3 w-3 rounded-sm bg-surface-container-highest"></div><span>Answered</span></div>
+            <div class="flex items-center gap-2"><div class="h-3 w-3 rounded-sm border border-outline-variant/40 bg-white"></div><span>Not Visited</span></div>
+            <div class="flex items-center gap-2"><div class="h-3 w-3 rounded-sm bg-warning"></div><span>Review</span></div>
+            <div class="flex items-center gap-2"><div class="h-3 w-3 rounded-sm bg-primary-soft border border-primary"></div><span>Current</span></div>
+          </div>
+        </section>
+
+        <section class="mt-6 rounded-2xl bg-surface-container-highest p-5">
+          <h3 class="font-headline text-lg font-bold text-primary">Quiz Summary</h3>
+          <div id="quiz-summary" class="mt-4 grid gap-3"></div>
+        </section>
+
+        <section id="section-overview-panel" class="mt-6 hidden rounded-2xl bg-surface-container-lowest p-5">
+          <h3 class="font-headline text-lg font-bold text-primary">Section Overview</h3>
+          <div id="section-overview" class="mt-4 grid gap-3"></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <section id="submit-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <p id="submit-modal-eyebrow" class="text-xs font-bold uppercase tracking-[0.24em] text-on-surface-variant">Submission Check</p>
+      <h2 id="submit-modal-title" class="mt-3 text-2xl font-extrabold text-primary">Submit Test?</h2>
+      <p id="submit-modal-copy" class="mt-3 text-sm leading-relaxed text-on-surface-variant">Review your progress before final submission.</p>
+      <div id="submit-modal-metrics" class="modal-metrics"></div>
+      <div class="mt-6 flex flex-wrap justify-end gap-3">
+        <button id="submit-cancel-button" class="rounded-xl bg-surface-container-high px-5 py-3 font-semibold text-on-surface" type="button">Continue Test</button>
+        <button id="submit-confirm-button" class="rounded-xl bg-primary px-6 py-3 font-bold text-white" type="button">Submit Now</button>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="./js/quiz.js?v=20260513c"></script>
+</body>
+</html>
+
+
