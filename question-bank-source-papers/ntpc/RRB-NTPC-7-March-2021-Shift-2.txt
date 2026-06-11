@@ -1,0 +1,2091 @@
+Participant ID
+Participant Name
+Test Center Name                Jaipur Engineering College
+Test Date                       07/03/2021
+Test Time                       3:00 PM - 4:30 PM
+Subject                         NTPC
+* Note
+Correct Answer will carry 1 mark per Question.
+Incorrect Answer will carry 1/3 Negative mark.
+
+1. Options shown in green color with a tick icon are correct.
+2. Chosen option on the right of the question indicates the option selected by the candidate.
+
+
+Section : NTPC
+
+ Q.1
+ Ans
+            1.
+
+
+            2.
+
+
+            3.
+
+
+            4.
+
+
+                                                                                   Question ID : 9489117698
+                                                                                    Option 1 ID : 94891130792
+                                                                                    Option 2 ID : 94891130790
+                                                                                    Option 3 ID : 94891130791
+                                                                                    Option 4 ID : 94891130789
+                                                                                        Status : Answered
+                                                                                 Chosen Option : 2
+Q.2
+
+Ans
+      1.
+
+
+
+      2.
+
+
+
+      3.
+
+
+
+      4.
+
+
+
+              Question ID : 9489118370
+              Option 1 ID : 94891133480
+              Option 2 ID : 94891133478
+              Option 3 ID : 94891133477
+              Option 4 ID : 94891133479
+                  Status : Answered
+           Chosen Option : 1
+
+
+Q.3
+Ans
+
+
+      1.
+
+
+
+
+      2.
+
+
+
+
+      3.
+
+
+
+
+      4.
+
+
+
+
+             Question ID : 9489117703
+              Option 1 ID : 94891130809
+              Option 2 ID : 94891130812
+              Option 3 ID : 94891130811
+              Option 4 ID : 94891130810
+                  Status : Answered
+           Chosen Option : 2
+Q.4
+
+Ans   1.
+
+      2.
+
+      3.
+
+      4.
+
+
+              Question ID : 9489118442
+              Option 1 ID : 94891133766
+              Option 2 ID : 94891133768
+              Option 3 ID : 94891133767
+              Option 4 ID : 94891133765
+                   Status : Not Answered
+           Chosen Option : --
+
+
+Q.5
+
+Ans   1.
+
+      2.
+
+      3.
+
+      4.
+
+
+              Question ID : 9489118366
+              Option 1 ID : 94891133461
+              Option 2 ID : 94891133464
+              Option 3 ID : 94891133462
+              Option 4 ID : 94891133463
+                  Status : Answered
+           Chosen Option : 4
+
+
+Q.6
+
+
+
+
+Ans   1.
+
+      2.
+
+      3.
+
+      4.
+
+
+             Question ID : 9489117687
+              Option 1 ID : 94891130746
+              Option 2 ID : 94891130748
+              Option 3 ID : 94891130745
+              Option 4 ID : 94891130747
+                  Status : Answered
+           Chosen Option : 4
+Q.7
+
+Ans   1.
+
+      2.
+
+      3.
+
+      4.
+
+
+              Question ID : 9489118368
+              Option 1 ID : 94891133472
+              Option 2 ID : 94891133469
+              Option 3 ID : 94891133470
+              Option 4 ID : 94891133471
+                  Status : Answered
+           Chosen Option : 3
+
+
+Q.8
+Ans   1.
+
+      2.
+
+      3.
+
+      4.
+
+
+              Question ID : 9489118440
+              Option 1 ID : 94891133759
+              Option 2 ID : 94891133760
+              Option 3 ID : 94891133758
+              Option 4 ID : 94891133757
+                  Status : Answered
+           Chosen Option : 3
+
+
+Q.9
+
+
+Ans   1.
+
+      2.
+
+      3.
+
+      4.
+
+
+             Question ID : 9489118427
+              Option 1 ID : 94891133706
+              Option 2 ID : 94891133708
+              Option 3 ID : 94891133707
+              Option 4 ID : 94891133705
+                  Status : Answered
+           Chosen Option : 3
+Q.10
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118346
+               Option 1 ID : 94891133381
+               Option 2 ID : 94891133383
+               Option 3 ID : 94891133382
+               Option 4 ID : 94891133384
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.11
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118441
+               Option 1 ID : 94891133762
+               Option 2 ID : 94891133761
+               Option 3 ID : 94891133763
+               Option 4 ID : 94891133764
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.12
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118425
+               Option 1 ID : 94891133699
+               Option 2 ID : 94891133698
+               Option 3 ID : 94891133697
+               Option 4 ID : 94891133700
+                   Status : Answered
+            Chosen Option : 1
+Q.13
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118428
+               Option 1 ID : 94891133709
+               Option 2 ID : 94891133712
+               Option 3 ID : 94891133710
+               Option 4 ID : 94891133711
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.14
+
+
+Ans    1.
+
+
+       2.
+
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118361
+               Option 1 ID : 94891133441
+               Option 2 ID : 94891133444
+               Option 3 ID : 94891133442
+               Option 4 ID : 94891133443
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.15
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118408
+               Option 1 ID : 94891133631
+               Option 2 ID : 94891133630
+               Option 3 ID : 94891133629
+               Option 4 ID : 94891133632
+                   Status : Answered
+            Chosen Option : 4
+Q.16
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118430
+               Option 1 ID : 94891133718
+               Option 2 ID : 94891133717
+               Option 3 ID : 94891133719
+               Option 4 ID : 94891133720
+                   Status : Not Answered
+            Chosen Option : --
+
+
+Q.17
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118353
+               Option 1 ID : 94891133409
+               Option 2 ID : 94891133412
+               Option 3 ID : 94891133411
+               Option 4 ID : 94891133410
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.18
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118415
+               Option 1 ID : 94891133659
+               Option 2 ID : 94891133660
+               Option 3 ID : 94891133658
+               Option 4 ID : 94891133657
+                   Status : Answered
+            Chosen Option : 3
+Q.19
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118431
+               Option 1 ID : 94891133723
+               Option 2 ID : 94891133722
+               Option 3 ID : 94891133724
+               Option 4 ID : 94891133721
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.20
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118360
+               Option 1 ID : 94891133440
+               Option 2 ID : 94891133437
+               Option 3 ID : 94891133438
+               Option 4 ID : 94891133439
+                   Status : Answered
+            Chosen Option : 2
+Q.21
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117694
+               Option 1 ID : 94891130773
+               Option 2 ID : 94891130775
+               Option 3 ID : 94891130774
+               Option 4 ID : 94891130776
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.22
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118414
+               Option 1 ID : 94891133656
+               Option 2 ID : 94891133654
+               Option 3 ID : 94891133653
+               Option 4 ID : 94891133655
+                   Status : Answered
+            Chosen Option : 2
+Q.23
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118357
+               Option 1 ID : 94891133426
+               Option 2 ID : 94891133425
+               Option 3 ID : 94891133428
+               Option 4 ID : 94891133427
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.24
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118359
+               Option 1 ID : 94891133435
+               Option 2 ID : 94891133436
+               Option 3 ID : 94891133434
+               Option 4 ID : 94891133433
+                   Status : Answered
+            Chosen Option : 2
+Q.25
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117693
+               Option 1 ID : 94891130769
+               Option 2 ID : 94891130770
+               Option 3 ID : 94891130772
+               Option 4 ID : 94891130771
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.26
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118356
+              Option 1 ID : 94891133422
+              Option 2 ID : 94891133421
+              Option 3 ID : 94891133423
+              Option 4 ID : 94891133424
+                   Status : Answered
+            Chosen Option : 1
+Q.27
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118367
+               Option 1 ID : 94891133466
+               Option 2 ID : 94891133465
+               Option 3 ID : 94891133468
+               Option 4 ID : 94891133467
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.28
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117697
+               Option 1 ID : 94891130786
+               Option 2 ID : 94891130785
+               Option 3 ID : 94891130788
+               Option 4 ID : 94891130787
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.29
+
+
+Ans
+       1.
+
+
+       2.
+
+
+       3.
+
+
+       4.
+
+
+
+              Question ID : 9489118363
+               Option 1 ID : 94891133451
+               Option 2 ID : 94891133449
+               Option 3 ID : 94891133452
+               Option 4 ID : 94891133450
+                   Status : Answered
+            Chosen Option : 3
+Q.30
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118348
+               Option 1 ID : 94891133391
+               Option 2 ID : 94891133390
+               Option 3 ID : 94891133392
+               Option 4 ID : 94891133389
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.31
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117696
+               Option 1 ID : 94891130781
+               Option 2 ID : 94891130784
+               Option 3 ID : 94891130782
+               Option 4 ID : 94891130783
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.32
+Ans
+       1.
+
+
+
+       2.
+
+
+
+       3.
+
+
+
+       4.
+
+
+
+              Question ID : 9489118369
+               Option 1 ID : 94891133475
+               Option 2 ID : 94891133476
+               Option 3 ID : 94891133473
+               Option 4 ID : 94891133474
+                   Status : Not Answered
+            Chosen Option : --
+Q.33
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117699
+               Option 1 ID : 94891130793
+               Option 2 ID : 94891130795
+               Option 3 ID : 94891130796
+               Option 4 ID : 94891130794
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.34
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118372
+               Option 1 ID : 94891133486
+               Option 2 ID : 94891133487
+               Option 3 ID : 94891133485
+               Option 4 ID : 94891133488
+                   Status : Answered
+            Chosen Option : 1
+Q.35
+
+Ans
+       1.
+
+
+       2.
+
+
+       3.
+
+
+       4.
+
+
+
+              Question ID : 9489118371
+               Option 1 ID : 94891133483
+               Option 2 ID : 94891133484
+               Option 3 ID : 94891133482
+               Option 4 ID : 94891133481
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.36
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118420
+               Option 1 ID : 94891133677
+               Option 2 ID : 94891133680
+               Option 3 ID : 94891133678
+               Option 4 ID : 94891133679
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.37
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118362
+               Option 1 ID : 94891133446
+               Option 2 ID : 94891133448
+               Option 3 ID : 94891133445
+               Option 4 ID : 94891133447
+                   Status : Answered
+            Chosen Option : 1
+Q.38
+
+Ans
+       1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118364
+               Option 1 ID : 94891133453
+               Option 2 ID : 94891133456
+               Option 3 ID : 94891133454
+               Option 4 ID : 94891133455
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.39
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118416
+               Option 1 ID : 94891133661
+               Option 2 ID : 94891133664
+               Option 3 ID : 94891133662
+               Option 4 ID : 94891133663
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.40
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118410
+               Option 1 ID : 94891133638
+               Option 2 ID : 94891133640
+               Option 3 ID : 94891133639
+               Option 4 ID : 94891133637
+                   Status : Answered
+            Chosen Option : 3
+Q.41
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118404
+               Option 1 ID : 94891133616
+               Option 2 ID : 94891133614
+               Option 3 ID : 94891133613
+               Option 4 ID : 94891133615
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.42
+
+
+
+
+Ans
+       1.
+
+
+
+       2.
+
+
+
+       3.
+
+
+
+       4.
+
+
+
+              Question ID : 9489118352
+               Option 1 ID : 94891133408
+               Option 2 ID : 94891133406
+               Option 3 ID : 94891133405
+               Option 4 ID : 94891133407
+                   Status : Answered
+            Chosen Option : 4
+Q.43
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118407
+              Option 1 ID : 94891133626
+               Option 2 ID : 94891133625
+               Option 3 ID : 94891133627
+               Option 4 ID : 94891133628
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.44
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118423
+               Option 1 ID : 94891133689
+               Option 2 ID : 94891133690
+               Option 3 ID : 94891133692
+               Option 4 ID : 94891133691
+                   Status : Not Answered
+            Chosen Option : --
+
+
+Q.45
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118344
+               Option 1 ID : 94891133374
+               Option 2 ID : 94891133375
+               Option 3 ID : 94891133373
+               Option 4 ID : 94891133376
+                   Status : Answered
+            Chosen Option : 2
+Q.46
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117685
+               Option 1 ID : 94891130740
+               Option 2 ID : 94891130737
+               Option 3 ID : 94891130738
+               Option 4 ID : 94891130739
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.47
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118434
+               Option 1 ID : 94891133736
+               Option 2 ID : 94891133734
+               Option 3 ID : 94891133735
+               Option 4 ID : 94891133733
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.48
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118422
+               Option 1 ID : 94891133685
+               Option 2 ID : 94891133686
+               Option 3 ID : 94891133688
+               Option 4 ID : 94891133687
+                   Status : Answered
+            Chosen Option : 4
+Q.49
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117702
+               Option 1 ID : 94891130806
+               Option 2 ID : 94891130808
+               Option 3 ID : 94891130805
+               Option 4 ID : 94891130807
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.50
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118419
+               Option 1 ID : 94891133674
+               Option 2 ID : 94891133676
+               Option 3 ID : 94891133673
+               Option 4 ID : 94891133675
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.51
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118429
+               Option 1 ID : 94891133714
+               Option 2 ID : 94891133716
+               Option 3 ID : 94891133715
+               Option 4 ID : 94891133713
+                   Status : Answered
+            Chosen Option : 2
+Q.52
+
+Ans
+       1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118365
+               Option 1 ID : 94891133458
+               Option 2 ID : 94891133459
+               Option 3 ID : 94891133460
+               Option 4 ID : 94891133457
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.53
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118426
+              Option 1 ID : 94891133701
+               Option 2 ID : 94891133702
+               Option 3 ID : 94891133703
+               Option 4 ID : 94891133704
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.54
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118438
+               Option 1 ID : 94891133751
+               Option 2 ID : 94891133752
+               Option 3 ID : 94891133749
+               Option 4 ID : 94891133750
+                   Status : Answered
+            Chosen Option : 1
+Q.55
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118355
+              Option 1 ID : 94891133418
+               Option 2 ID : 94891133419
+               Option 3 ID : 94891133417
+               Option 4 ID : 94891133420
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.56
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118418
+              Option 1 ID : 94891133669
+               Option 2 ID : 94891133672
+               Option 3 ID : 94891133670
+               Option 4 ID : 94891133671
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.57
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118351
+               Option 1 ID : 94891133401
+               Option 2 ID : 94891133402
+               Option 3 ID : 94891133403
+               Option 4 ID : 94891133404
+                   Status : Answered
+            Chosen Option : 3
+Q.58
+
+Ans
+       1.
+
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118406
+              Option 1 ID : 94891133622
+               Option 2 ID : 94891133621
+               Option 3 ID : 94891133623
+               Option 4 ID : 94891133624
+                   Status : Not Answered
+            Chosen Option : --
+
+
+Q.59
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117695
+               Option 1 ID : 94891130779
+               Option 2 ID : 94891130777
+               Option 3 ID : 94891130778
+               Option 4 ID : 94891130780
+                   Status : Answered
+            Chosen Option : 2
+Q.60
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117676
+               Option 1 ID : 94891130704
+               Option 2 ID : 94891130703
+               Option 3 ID : 94891130701
+               Option 4 ID : 94891130702
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.61
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118405
+               Option 1 ID : 94891133617
+               Option 2 ID : 94891133619
+               Option 3 ID : 94891133620
+               Option 4 ID : 94891133618
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.62
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118349
+               Option 1 ID : 94891133395
+               Option 2 ID : 94891133396
+               Option 3 ID : 94891133393
+               Option 4 ID : 94891133394
+                   Status : Answered
+            Chosen Option : 3
+Q.63
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118354
+               Option 1 ID : 94891133413
+               Option 2 ID : 94891133416
+               Option 3 ID : 94891133414
+               Option 4 ID : 94891133415
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.64
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118435
+               Option 1 ID : 94891133739
+               Option 2 ID : 94891133738
+               Option 3 ID : 94891133740
+               Option 4 ID : 94891133737
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.65
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118358
+               Option 1 ID : 94891133430
+               Option 2 ID : 94891133432
+               Option 3 ID : 94891133431
+               Option 4 ID : 94891133429
+                   Status : Not Answered
+            Chosen Option : --
+Q.66
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118417
+               Option 1 ID : 94891133665
+               Option 2 ID : 94891133666
+               Option 3 ID : 94891133668
+               Option 4 ID : 94891133667
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.67
+
+
+Ans
+       1.
+
+
+
+       2.
+
+
+
+       3.
+
+
+
+       4.
+
+
+
+               Question ID : 9489118373
+               Option 1 ID : 94891133492
+               Option 2 ID : 94891133491
+               Option 3 ID : 94891133489
+               Option 4 ID : 94891133490
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.68
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118421
+               Option 1 ID : 94891133681
+               Option 2 ID : 94891133684
+               Option 3 ID : 94891133682
+               Option 4 ID : 94891133683
+                   Status : Answered
+            Chosen Option : 2
+Q.69
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118409
+               Option 1 ID : 94891133636
+               Option 2 ID : 94891133635
+               Option 3 ID : 94891133633
+               Option 4 ID : 94891133634
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.70
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118436
+               Option 1 ID : 94891133742
+               Option 2 ID : 94891133744
+               Option 3 ID : 94891133741
+               Option 4 ID : 94891133743
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.71
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118413
+               Option 1 ID : 94891133651
+               Option 2 ID : 94891133650
+               Option 3 ID : 94891133652
+               Option 4 ID : 94891133649
+                   Status : Answered
+            Chosen Option : 4
+Q.72
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117677
+               Option 1 ID : 94891130708
+               Option 2 ID : 94891130705
+               Option 3 ID : 94891130707
+               Option 4 ID : 94891130706
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.73
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117682
+               Option 1 ID : 94891130728
+               Option 2 ID : 94891130727
+               Option 3 ID : 94891130726
+               Option 4 ID : 94891130725
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.74
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118433
+               Option 1 ID : 94891133732
+               Option 2 ID : 94891133729
+               Option 3 ID : 94891133730
+               Option 4 ID : 94891133731
+                   Status : Answered
+            Chosen Option : 1
+Q.75
+
+Ans    1.
+
+
+       2.
+
+       3.
+
+
+       4.
+
+
+
+
+              Question ID : 9489118443
+               Option 1 ID : 94891133769
+               Option 2 ID : 94891133771
+               Option 3 ID : 94891133770
+               Option 4 ID : 94891133772
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.76
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118424
+              Option 1 ID : 94891133695
+              Option 2 ID : 94891133694
+               Option 3 ID : 94891133693
+               Option 4 ID : 94891133696
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.77
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118350
+               Option 1 ID : 94891133397
+               Option 2 ID : 94891133399
+               Option 3 ID : 94891133398
+               Option 4 ID : 94891133400
+                   Status : Answered
+            Chosen Option : 3
+Q.78
+
+
+Ans
+       1.
+
+
+
+       2.
+
+
+
+       3.
+
+
+
+       4.
+
+
+
+               Question ID : 9489118347
+               Option 1 ID : 94891133387
+               Option 2 ID : 94891133388
+               Option 3 ID : 94891133385
+               Option 4 ID : 94891133386
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.79
+
+
+
+
+Ans
+       1.
+
+
+
+       2.
+
+
+
+       3.
+
+
+
+       4.
+
+
+
+              Question ID : 9489118345
+               Option 1 ID : 94891133378
+               Option 2 ID : 94891133380
+               Option 3 ID : 94891133379
+               Option 4 ID : 94891133377
+                   Status : Answered
+            Chosen Option : 1
+Q.80
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117700
+               Option 1 ID : 94891130797
+               Option 2 ID : 94891130800
+               Option 3 ID : 94891130798
+               Option 4 ID : 94891130799
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.81
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118437
+               Option 1 ID : 94891133745
+               Option 2 ID : 94891133746
+               Option 3 ID : 94891133747
+               Option 4 ID : 94891133748
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.82
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118412
+               Option 1 ID : 94891133648
+               Option 2 ID : 94891133646
+               Option 3 ID : 94891133647
+               Option 4 ID : 94891133645
+                   Status : Answered
+            Chosen Option : 3
+Q.83
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118439
+               Option 1 ID : 94891133756
+               Option 2 ID : 94891133754
+               Option 3 ID : 94891133755
+               Option 4 ID : 94891133753
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.84
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489118411
+               Option 1 ID : 94891133641
+               Option 2 ID : 94891133643
+               Option 3 ID : 94891133642
+               Option 4 ID : 94891133644
+                   Status : Answered
+            Chosen Option : 4
+
+
+Q.85
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489118432
+               Option 1 ID : 94891133728
+               Option 2 ID : 94891133725
+               Option 3 ID : 94891133727
+               Option 4 ID : 94891133726
+                   Status : Not Answered
+            Chosen Option : --
+Q.86
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117689
+               Option 1 ID : 94891130754
+               Option 2 ID : 94891130756
+               Option 3 ID : 94891130755
+               Option 4 ID : 94891130753
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.87
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117690
+               Option 1 ID : 94891130757
+               Option 2 ID : 94891130760
+               Option 3 ID : 94891130759
+               Option 4 ID : 94891130758
+                   Status : Answered
+            Chosen Option : 1
+Q.88
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117691
+               Option 1 ID : 94891130764
+               Option 2 ID : 94891130761
+               Option 3 ID : 94891130762
+               Option 4 ID : 94891130763
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.89
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117692
+               Option 1 ID : 94891130767
+               Option 2 ID : 94891130766
+               Option 3 ID : 94891130768
+               Option 4 ID : 94891130765
+                   Status : Answered
+            Chosen Option : 1
+Q.90
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117683
+              Option 1 ID : 94891130730
+              Option 2 ID : 94891130731
+              Option 3 ID : 94891130732
+               Option 4 ID : 94891130729
+                   Status : Answered
+            Chosen Option : 3
+
+
+Q.91
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117680
+              Option 1 ID : 94891130719
+               Option 2 ID : 94891130717
+               Option 3 ID : 94891130718
+               Option 4 ID : 94891130720
+                   Status : Answered
+            Chosen Option : 3
+Q.92
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117679
+              Option 1 ID : 94891130715
+               Option 2 ID : 94891130714
+               Option 3 ID : 94891130716
+               Option 4 ID : 94891130713
+                   Status : Answered
+            Chosen Option : 1
+
+
+Q.93
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117681
+               Option 1 ID : 94891130721
+               Option 2 ID : 94891130724
+               Option 3 ID : 94891130723
+               Option 4 ID : 94891130722
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.94
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117674
+               Option 1 ID : 94891130694
+               Option 2 ID : 94891130693
+               Option 3 ID : 94891130695
+               Option 4 ID : 94891130696
+                   Status : Answered
+            Chosen Option : 3
+Q.95
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117678
+               Option 1 ID : 94891130711
+               Option 2 ID : 94891130709
+               Option 3 ID : 94891130710
+               Option 4 ID : 94891130712
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.96
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+               Question ID : 9489117688
+               Option 1 ID : 94891130749
+               Option 2 ID : 94891130752
+               Option 3 ID : 94891130750
+               Option 4 ID : 94891130751
+                   Status : Answered
+            Chosen Option : 3
+Q.97
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117684
+              Option 1 ID : 94891130733
+               Option 2 ID : 94891130736
+               Option 3 ID : 94891130735
+               Option 4 ID : 94891130734
+                   Status : Answered
+            Chosen Option : 2
+
+
+Q.98
+
+
+
+
+Ans    1.
+
+       2.
+
+       3.
+
+       4.
+
+
+              Question ID : 9489117675
+               Option 1 ID : 94891130697
+               Option 2 ID : 94891130700
+               Option 3 ID : 94891130698
+               Option 4 ID : 94891130699
+                   Status : Answered
+            Chosen Option : 4
+ Q.99
+
+
+
+
+ Ans        1.
+
+            2.
+
+            3.
+
+            4.
+
+
+                                                Question ID : 9489117686
+                                                Option 1 ID : 94891130741
+                                                Option 2 ID : 94891130742
+                                                Option 3 ID : 94891130743
+                                                Option 4 ID : 94891130744
+                                                    Status : Answered
+                                             Chosen Option : 4
+
+
+Q.100
+
+
+ Ans        1.
+
+            2.
+
+            3.
+
+            4.
+
+
+                                                Question ID : 9489117701
+                                                Option 1 ID : 94891130802
+                                                Option 2 ID : 94891130801
+                                                Option 3 ID : 94891130804
+                                                Option 4 ID : 94891130803
+                                                    Status : Answered
+                                             Chosen Option : 4
+
+
+
+
+QP HTML Generated date 2021/08/02-18:39:48
+
