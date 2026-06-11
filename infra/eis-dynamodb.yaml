@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: DynamoDB cache table for RRB Explanation Intelligence System
+
+Parameters:
+  TableName:
+    Type: String
+    Default: rrb_explanations
+    Description: DynamoDB table name used by the explanation Lambda.
+
+Resources:
+  ExplanationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref TableName
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: question_id
+          AttributeType: S
+        - AttributeName: question_hash
+          AttributeType: S
+      KeySchema:
+        - AttributeName: question_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: question_hash-index
+          KeySchema:
+            - AttributeName: question_hash
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      SSESpecification:
+        SSEEnabled: true
+
+Outputs:
+  TableName:
+    Description: Explanation cache table name
+    Value: !Ref ExplanationsTable
+  QuestionHashIndexName:
+    Description: GSI name for duplicate question reuse
+    Value: question_hash-index

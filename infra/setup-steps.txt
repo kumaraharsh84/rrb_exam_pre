@@ -1,0 +1,46 @@
+RRB AI Practice Center - AWS Deployment Notes
+============================================
+
+1. Enable AWS Bedrock
+- Open AWS Console -> Bedrock -> Model access
+- Enable Anthropic Claude 3.5 Sonnet for your account
+- Keep your working region aligned with the model availability you choose
+
+2. Create the Lambda function
+- Runtime: Python 3.12
+- Suggested function name: rrb-question-generator
+- Upload backend/lambda_function.py and requirements.txt
+- Increase timeout to 30 seconds
+- Attach a role with Bedrock invocation permission
+
+3. Create API Gateway
+- Create a REST API or HTTP API
+- Add a POST route/resource for /generate
+- Integrate it with the Lambda function
+- Enable CORS for your frontend domain
+- Copy the invoke URL and update frontend/js/api.js
+
+4. Host the frontend
+- Upload frontend/ contents to an S3 bucket
+- Enable static website hosting if using S3 website endpoint directly
+- For HTTPS, put CloudFront in front of the bucket
+
+5. Add custom domain
+- Request an ACM certificate in us-east-1 for CloudFront
+- Attach the certificate to your CloudFront distribution
+- Point your DNS record to the CloudFront domain
+
+6. Production hardening
+- Replace Access-Control-Allow-Origin: * with your real domain
+- Add API throttling / WAF / usage plan limits
+- Narrow Lambda IAM permissions if possible
+- Add CloudFront cache invalidation after frontend deployments
+
+7. Explanation Intelligence System
+- Follow infra/EIS_MANUAL_AWS_CHECKLIST.md
+- Create DynamoDB table rrb_explanations with question_hash-index
+- Create Lambda rrb-explanation-service
+- In AWS Lambda editor, create explanation_lambda.py and paste code from backend/explanation_lambda.py
+- Add API Gateway POST /explanation
+- Confirm first Show Solution request generates and saves
+- Confirm second request returns cached explanation
