@@ -592,7 +592,7 @@ function renderFinalMockHistory(targetSelector = "#final-mock-history-list") {
     historyList.innerHTML = `
       <article class="history-empty">
         <strong>No final mock attempts yet</strong>
-        <span>90-minute full pattern mock attempts yahan alag se save honge.</span>
+        <span>90-minute full pattern mock attempts will be saved separately here.</span>
       </article>
     `;
     return;
@@ -774,7 +774,7 @@ function renderBookmarks() {
     bookmarkList.innerHTML = `
       <article class="history-empty">
         <strong>No bookmarked questions for ${currentExam}</strong>
-        <span>Current selected exam ke important questions yahan appear honge.</span>
+        <span>Important questions for the currently selected exam will appear here.</span>
       </article>
     `;
     return;
@@ -784,7 +784,7 @@ function renderBookmarks() {
     bookmarkList.innerHTML = `
       <article class="history-empty">
         <strong>No bookmarked questions found</strong>
-        <span>Filter change karke kisi aur subject ya topic ko select karo.</span>
+        <span>Change the filters or select another subject/topic.</span>
       </article>
     `;
     return;
@@ -881,7 +881,7 @@ function renderMistakes() {
     mistakeList.innerHTML = `
       <article class="history-empty">
         <strong>No mistakes saved yet for ${currentExam}</strong>
-        <span>Galat questions revise karne ke liye yahan appear honge.</span>
+        <span>Incorrect questions will appear here for revision.</span>
       </article>
     `;
     return;
@@ -1096,7 +1096,7 @@ function renderWrongQuestions() {
     wrongQuestionsList.innerHTML = `
       <article class="history-empty">
         <strong>No revision items saved yet for ${currentExam}</strong>
-        <span>Score screen ke wrong answers aur saved mistakes yahan ek hi jagah review aur retry ke liye milenge.</span>
+        <span>Incorrect answers and saved mistakes from the score screen will appear here for review and retry.</span>
       </article>
     `;
     return;
@@ -1106,7 +1106,7 @@ function renderWrongQuestions() {
     wrongQuestionsList.innerHTML = `
       <article class="history-empty">
         <strong>No revision items found for ${selectedSubject}</strong>
-        <span>Filter change karke kisi aur subject ko select karo.</span>
+        <span>Change the filters or select another subject.</span>
       </article>
     `;
     return;
@@ -1593,8 +1593,8 @@ function setupUtilityPage() {
 
     if (historyPageCopy) {
       historyPageCopy.textContent = activeView === "final-mock"
-        ? "Full-length final mock attempts ko alag se review karo."
-        : "Practice, weak drill, bookmark retry, aur other non-final-mock attempts yahan review karo.";
+        ? "Review your full-length final mock attempts separately here."
+        : "Review your practice sessions, weak drills, bookmark retries, and other practice attempts here.";
     }
 
     if (clearHistoryButton) {
@@ -2206,14 +2206,14 @@ function setupHomePage() {
         .sort((left, right) => left.accuracy - right.accuracy)[0];
 
       chapterPracticeHint.textContent = weakest
-        ? `Smart Mix on - more questions weakest chapter "${weakest.topic}" se aayenge.`
-        : "Smart Mix on - weakest chapter ko extra weight milega.";
+        ? `Smart Mix on - more questions will be drawn from your weakest chapter: "${weakest.topic}".`
+        : "Smart Mix on - extra weight will be given to your weakest chapter.";
       return;
     }
 
     chapterPracticeHint.textContent = selected
-      ? `${selected * 5} RRB-style questions auto-generate honge. Har selected chapter se 5 questions aayenge.`
-      : "At least ek chapter select karo. Har selected chapter se 5 RRB-style questions aayenge.";
+      ? `${selected * 5} RRB-style questions will be auto-generated. 5 questions from each selected chapter.`
+      : "Select at least one chapter. 5 RRB-style questions will be generated for each selected chapter.";
   };
 
   const syncChapterSearch = () => {
@@ -2315,7 +2315,7 @@ function setupHomePage() {
     setChapterSelectionOpen(false);
 
     if (chapterPracticeHint) {
-      chapterPracticeHint.textContent = "Selected subject ke all major topics ko mix karke test banega.";
+      chapterPracticeHint.textContent = "All major topics from the selected subject will be mixed to generate the test.";
     }
 
     syncModeFields();
@@ -2763,7 +2763,7 @@ function setupHomePage() {
       : "";
 
     if (practiceType === "chapter-practice" && !selectedChapters.length) {
-      window.alert("Chapter Practice ke liye kam se kam ek chapter select karo.");
+      window.alert("Please select at least one chapter for Chapter Practice.");
       return;
     }
 

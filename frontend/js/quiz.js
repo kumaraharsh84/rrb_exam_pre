@@ -113,7 +113,7 @@ function getSectionInsight(accuracy) {
     return {
       label: "Strong",
       className: "insight-strong",
-      focus: "Revision aur speed maintain rakho."
+      focus: "Maintain your revision and speed."
     };
   }
 
@@ -121,7 +121,7 @@ function getSectionInsight(accuracy) {
     return {
       label: "Improving",
       className: "insight-improving",
-      focus: "Mixed practice aur accuracy dono par kaam karo."
+      focus: "Focus on both mixed practice and accuracy."
     };
   }
 
@@ -696,7 +696,7 @@ async function setupQuizPage() {
       tipTitle.textContent = "Final Mock Strategy";
     }
     if (tipBody) {
-      tipBody.textContent = "Section balance maintain karo, easy questions pehle secure karo, aur timer ko regular intervals par check karte raho.";
+      tipBody.textContent = "Maintain section balance, secure easy questions first, and keep checking the timer at regular intervals.";
     }
   } else if (config.mode === "mock") {
     modeContextBanner?.classList.remove("hidden");

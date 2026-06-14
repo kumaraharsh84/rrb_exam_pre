@@ -1,6 +1,6 @@
-﻿// ================================================================
-// RRB COMPLETE SYLLABUS â€” SABHI 6 EXAMS
-// Seedha apne js/app.js mein TOPICS variable ki jagah paste karo
+// ================================================================
+// RRB COMPLETE SYLLABUS — ALL 6 EXAMS
+// Paste directly in place of the TOPICS variable in js/app.js
 // ================================================================
 export const TOPICS = {
 
