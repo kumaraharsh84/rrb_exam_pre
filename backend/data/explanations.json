@@ -12,6 +12,18 @@
       "updated_at": "2026-06-15T05:47:10Z",
       "generation_model": "local-mock-explainer",
       "generation_version": "eis-v1"
+    },
+    {
+      "id": "exp_5c1ba917586be803",
+      "question_id": "rrb-group-d-rrb-grop-d-cbt-1-paper-4-12-2025-s2-q033",
+      "question_hash": "5c1ba917586be803ebe77d2241c41e3ccfdc53b6685a8a426444e729d2a4a552",
+      "explanation": "[Local Dev Mode - Math/Reasoning Solution]\nFormula/Logic: Solve using standard All Topics principles.\nStep 1: Identify details from the question stem: \"Ans (2 + 10x + 25) Simpli - implity +5 Jf A.x Xx B.5 “~ C.0 X D. 10 5.\".\nStep 2: Solve step-by-step:\n  - Analyze parameters: options provided are A) x, B) 5, C) 0, D) 10.\n  - Apply logical derivation to determine the correct value.\nStep 3: The calculated result is A) x.\nFinal Answer: Therefore, the correct option is A) x.",
+      "subject": "Mathematics",
+      "topic": "All Topics",
+      "created_at": "2026-06-15T15:00:55Z",
+      "updated_at": "2026-06-15T15:00:55Z",
+      "generation_model": "local-mock-explainer",
+      "generation_version": "eis-v1"
     }
   ]
 }
