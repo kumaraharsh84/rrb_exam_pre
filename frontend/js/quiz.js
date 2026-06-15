@@ -643,6 +643,7 @@ async function setupQuizPage() {
   const submitModalMetrics = document.querySelector("#submit-modal-metrics");
   const submitCancelButton = document.querySelector("#submit-cancel-button");
   const submitConfirmButton = document.querySelector("#submit-confirm-button");
+  const submitForceButton = document.querySelector("#submit-force-button");
 
   const currentExam = sanitizeActiveExam(config.exam || "RRB NTPC");
   const examPattern = getExamPattern(currentExam, config.stage || "", config.branch || "");
@@ -905,6 +906,13 @@ async function setupQuizPage() {
         submitConfirmButton.textContent = "Please Wait...";
         submitConfirmButton.onclick = null;
       }
+      if (submitForceButton) {
+        submitForceButton.classList.remove("hidden");
+        submitForceButton.onclick = () => {
+          closeSubmitModal();
+          finishQuiz(questions, answers, reviewFlags);
+        };
+      }
     } else {
       if (submitConfirmButton) {
         submitConfirmButton.disabled = false;
@@ -916,6 +924,10 @@ async function setupQuizPage() {
         closeSubmitModal();
         finishQuiz(questions, answers, reviewFlags);
       };
+      if (submitForceButton) {
+        submitForceButton.classList.add("hidden");
+        submitForceButton.onclick = null;
+      }
     }
   };
 

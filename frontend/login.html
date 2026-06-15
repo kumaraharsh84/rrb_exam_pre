@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('rrb_theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Login | The Academic Edge</title>
@@ -165,6 +176,16 @@
   </style>
 </head>
 <body class="min-h-screen overflow-y-auto bg-background text-on-surface">
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('rrb_theme') || 'light';
+        if (theme === 'dark') {
+          document.body.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
   
   <main class="flex min-h-screen items-center justify-center p-4 md:p-8 lg:p-12">
     <div class="auth-shell grid w-full max-w-6xl overflow-hidden rounded-2xl bg-surface-container-lowest lg:grid-cols-12">

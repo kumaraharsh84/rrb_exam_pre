@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('rrb_theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -439,6 +450,16 @@
   </style>
 </head>
 <body class="flex min-h-screen flex-col bg-background text-on-surface">
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('rrb_theme') || 'light';
+        if (theme === 'dark') {
+          document.body.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <header class="sticky top-0 z-50 border-b border-outline-variant/20 bg-background">
     <div class="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-6 py-3">
       <div class="flex items-center gap-8">
@@ -579,6 +600,7 @@
       <p id="submit-modal-copy" class="mt-3 text-sm leading-relaxed text-on-surface-variant">Review your progress before final submission.</p>
       <div id="submit-modal-metrics" class="modal-metrics"></div>
       <div class="mt-6 flex flex-wrap justify-end gap-3">
+        <button id="submit-force-button" class="rounded-xl bg-red-600 hover:bg-red-700 px-6 py-3 font-bold text-white hidden" type="button">Force Submit Anyway</button>
         <button id="submit-cancel-button" class="rounded-xl bg-surface-container-high px-5 py-3 font-semibold text-on-surface" type="button">Continue Test</button>
         <button id="submit-confirm-button" class="rounded-xl bg-primary px-6 py-3 font-bold text-white" type="button">Submit Now</button>
       </div>

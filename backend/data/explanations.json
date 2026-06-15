@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "exp_b2df06237852de00",
+      "question_id": "rrb-group-d-rrb-grop-d-cbt-1-paper-8-12-2025-s1-q046",
+      "question_hash": "b2df06237852de00006b874f3ff6f2ab3d092a376ed0d74fa2c31bb115055f63",
+      "explanation": "[Local Dev Mode - Math/Reasoning Solution]\nFormula/Logic: Solve using standard All Topics principles.\nStep 1: Identify details from the question stem: \"The marks of P are 10 more than the marks of Q. The marks of Q are 10 more than half of the marks of P. The marks of Q are ____.\".\nStep 2: Solve step-by-step:\n  - Analyze parameters: options provided are A) 20, B) 30, C) 40, D) 36.\n  - Apply logical derivation to determine the correct value.\nStep 3: The calculated result is B) 30.\nFinal Answer: Therefore, the correct option is B) 30.",
+      "subject": "Mathematics",
+      "topic": "All Topics",
+      "created_at": "2026-06-15T05:47:10Z",
+      "updated_at": "2026-06-15T05:47:10Z",
+      "generation_model": "local-mock-explainer",
+      "generation_version": "eis-v1"
+    }
+  ]
+}
