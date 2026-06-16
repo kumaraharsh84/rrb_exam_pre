@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('rrb_theme') || 'light';
-        if (theme === 'dark') {
-          document.documentElement.classList.remove('light');
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) {}
-    })();
-  </script>
+  <script src="./js/theme-init.js?v=20260513c"></script>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>The Academic Edge | Analysis</title>
@@ -48,16 +38,7 @@
   </script>
 </head>
 <body class="min-h-screen bg-background text-on-surface" data-utility-page="analysis">
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('rrb_theme') || 'light';
-        if (theme === 'dark') {
-          document.body.classList.add('dark-mode');
-        }
-      } catch (e) {}
-    })();
-  </script>
+
   <header class="sticky top-0 z-50 bg-background">
     <nav class="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-6 py-3">
       <div class="font-headline text-xl font-bold tracking-tight text-primary">The Academic Edge</div>
@@ -108,7 +89,7 @@
         <nav class="space-y-1">
           <a class="sidebar-tab-link" data-nav-key="home" href="./dashboard.html"><span class="material-symbols-outlined">home</span><span>Home</span></a>
           <a class="sidebar-tab-link" data-nav-key="history" href="./history.html"><span class="material-symbols-outlined">history</span><span>Test History</span></a>
-          <a class="sidebar-tab-link" data-nav-key="final-mock-history" href="./final-mock-history.html"><span class="material-symbols-outlined">timer</span><span>Final Mock History</span></a>
+          <a class="sidebar-tab-link" data-nav-key="final-mock-history" href="./history.html?view=final-mock"><span class="material-symbols-outlined">timer</span><span>Final Mock History</span></a>
           <a class="sidebar-tab-link" data-nav-key="bookmarks" href="./bookmarks.html"><span class="material-symbols-outlined">bookmark</span><span>Bookmarks</span></a>
           <a class="sidebar-tab-link" data-nav-key="wrong-questions" href="./wrong-questions.html"><span class="material-symbols-outlined">rule</span><span>Wrong Questions</span></a>
           <a class="sidebar-tab-link" data-nav-key="analysis" href="./analysis.html"><span class="material-symbols-outlined">analytics</span><span>Analysis</span></a>
@@ -121,7 +102,7 @@
       <nav class="flex gap-3 overflow-x-auto pb-1 lg:hidden">
         <a class="mobile-nav-link" data-nav-key="home" href="./dashboard.html">Home</a>
         <a class="mobile-nav-link" data-nav-key="history" href="./history.html">Test History</a>
-        <a class="mobile-nav-link" data-nav-key="final-mock-history" href="./final-mock-history.html">Final Mock History</a>
+        <a class="mobile-nav-link" data-nav-key="final-mock-history" href="./history.html?view=final-mock">Final Mock History</a>
         <a class="mobile-nav-link" data-nav-key="bookmarks" href="./bookmarks.html">Bookmarks</a>
         <a class="mobile-nav-link" data-nav-key="wrong-questions" href="./wrong-questions.html">Wrong Questions</a>
         <a class="mobile-nav-link" data-nav-key="analysis" href="./analysis.html">Analysis</a>
@@ -148,6 +129,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/app.js?v=20260513c"></script>
 </body>
 </html>

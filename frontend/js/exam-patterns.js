@@ -36,10 +36,19 @@ export const EXAM_PATTERNS = {
   }
 };
 
-const ACTIVE_EXAMS = ["RRB NTPC", "RRB Group D", "RRB Technician Grade 3"];
+export const ACTIVE_EXAMS = ["RRB NTPC", "RRB Group D", "RRB Technician Grade 3"];
+
+export function sanitizeActiveExam(examName) {
+  if (ACTIVE_EXAMS.includes(examName)) return examName;
+  const cleaned = String(examName || "").trim();
+  if (cleaned.toLowerCase().includes("ntpc")) return "RRB NTPC";
+  if (cleaned.toLowerCase().includes("group d") || cleaned.toLowerCase().includes("group-d")) return "RRB Group D";
+  if (cleaned.toLowerCase().includes("technician")) return "RRB Technician Grade 3";
+  return "RRB NTPC";
+}
 
 export function getExamPattern(examName, stage = "", branch = "") {
-  const activeExam = ACTIVE_EXAMS.includes(examName) ? examName : "RRB NTPC";
+  const activeExam = sanitizeActiveExam(examName);
   const combinedKey = stage ? `${activeExam} ${stage}` : activeExam;
   const basePattern = EXAM_PATTERNS[combinedKey] || EXAM_PATTERNS[activeExam] || EXAM_PATTERNS["RRB NTPC"];
   return basePattern;

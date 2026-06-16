@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('rrb_theme') || 'light';
-        if (theme === 'dark') {
-          document.documentElement.classList.remove('light');
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) {}
-    })();
-  </script>
+  <script src="./js/theme-init.js?v=20260513c"></script>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>RRB AI Practice Center - Select Your Exam</title>
@@ -67,18 +57,18 @@
       cursor: pointer;
     }
     body {
-      background: #f5f7fb;
+      background: var(--bg-main);
     }
     .exam-card {
       position: relative;
       border: 1.5px solid var(--border);
-      background: #ffffff;
+      background: var(--bg-surface);
       box-shadow: 0 12px 32px rgba(25, 28, 30, 0.05);
     }
     .exam-card.active {
       border-color: var(--primary) !important;
       box-shadow: 0 10px 24px rgba(15, 118, 110, 0.16);
-      background: #ffffff;
+      background: var(--bg-surface);
       transform: translateY(-2px);
     }
     .exam-card.active::after {
@@ -145,7 +135,7 @@
       box-shadow: none;
     }
     .page-header {
-      background: #ffffff;
+      background: var(--bg-surface);
       box-shadow: 0 6px 24px rgba(25, 28, 30, 0.04);
     }
     .eyebrow {
@@ -176,16 +166,7 @@
   </style>
 </head>
 <body class="flex h-screen flex-col overflow-hidden bg-background text-on-surface">
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('rrb_theme') || 'light';
-        if (theme === 'dark') {
-          document.body.classList.add('dark-mode');
-        }
-      } catch (e) {}
-    })();
-  </script>
+
   <header class="page-header sticky top-0 z-50 bg-background shadow-sm backdrop-blur-xl">
     <div class="flex w-full items-center justify-between px-6 py-4">
       <div class="flex items-center gap-8">
@@ -234,7 +215,7 @@
           </button>
         </div>
         <div class="mt-12 flex w-full max-w-lg items-center justify-between gap-6">
-          <a class="flex items-center gap-2 font-bold text-primary transition-transform hover:-translate-x-1" href="./login.html"><span class="material-symbols-outlined">arrow_back</span><span>Previous</span></a>
+          <a class="flex items-center gap-2 font-bold text-primary transition-transform hover:-translate-x-1" href="./login.html"><span class="material-symbols-outlined">arrow_back</span><span>Back</span></a>
           <button id="exam-continue-button" class="confirm-button flex items-center gap-3 rounded-2xl px-12 py-4 text-lg font-bold text-white transition-all active:scale-95" onclick="window.__rrbContinueExamSelection && window.__rrbContinueExamSelection(event)" type="submit">
             Confirm Choice
             <span class="material-symbols-outlined">arrow_forward</span>
@@ -243,7 +224,7 @@
       </form>
     </div>
   </main>
-  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/app.js?v=20260513c"></script>
   <script>
     (() => {
       const examForm = document.querySelector("#exam-select-form");

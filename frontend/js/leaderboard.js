@@ -1,4 +1,5 @@
 import { SUPABASE_KEY, SUPABASE_URL, isSupabaseConfigured } from "./config.js";
+import { escapeHtml } from "./app.js?v=20260513c";
 
 const LOCAL_LEADERBOARD_KEY = "rrbLeaderboardLocal";
 const LOCAL_LEADERBOARD_EVENTS_KEY = "rrbLeaderboardLocalEvents";
@@ -16,16 +17,11 @@ function readJson(key, fallback = []) {
 }
 
 function saveJson(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error("Failed to write to localStorage:", error);
+  }
 }
 
 function normalizeRange(range = DEFAULT_RANGE) {
@@ -70,11 +66,38 @@ function sortLeaderboard(entries = []) {
   );
 }
 
+function migrateLegacyLeaderboard() {
+  const eventRecords = readJson(LOCAL_LEADERBOARD_EVENTS_KEY, []);
+  if (eventRecords.length) {
+    return;
+  }
+  
+  const legacyRecords = readJson(LOCAL_LEADERBOARD_KEY, []);
+  if (legacyRecords.length) {
+    const migrated = legacyRecords.map(entry => ({
+      username: entry.username,
+      email: entry.email || entry.username,
+      exam: entry.exam,
+      points: entry.points,
+      tests_done: entry.tests_done || 1,
+      best_score: entry.best_score || 0,
+      updated_at: entry.updated_at || new Date().toISOString()
+    }));
+    saveJson(LOCAL_LEADERBOARD_EVENTS_KEY, migrated);
+    try {
+      localStorage.removeItem(LOCAL_LEADERBOARD_KEY);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+}
+
 function aggregateLeaderboardEntries(entries = []) {
   return sortLeaderboard(
     Object.values(
       entries.reduce((accumulator, entry) => {
-        const key = `${entry.exam}::${String(entry.username || "").toLowerCase()}`;
+        const emailKey = entry.email || entry.username || "unknown";
+        const key = `${entry.exam}::${String(emailKey).toLowerCase()}`;
         const current = accumulator[key] || {
           username: entry.username,
           exam: entry.exam,
@@ -84,10 +107,14 @@ function aggregateLeaderboardEntries(entries = []) {
           updated_at: entry.updated_at
         };
 
+        if (!current.updated_at || new Date(entry.updated_at).getTime() >= new Date(current.updated_at).getTime()) {
+          current.username = entry.username;
+          current.updated_at = entry.updated_at;
+        }
+
         current.points += Number(entry.points || 0);
         current.tests_done += Number(entry.tests_done || 1);
         current.best_score = Math.max(current.best_score || 0, Number(entry.best_score || 0));
-        current.updated_at = entry.updated_at || current.updated_at;
         accumulator[key] = current;
         return accumulator;
       }, {})
@@ -96,26 +123,25 @@ function aggregateLeaderboardEntries(entries = []) {
 }
 
 function getLocalLeaderboard(exam, range = DEFAULT_RANGE) {
+  migrateLegacyLeaderboard();
   const eventRecords = readJson(LOCAL_LEADERBOARD_EVENTS_KEY, []);
-  if (Array.isArray(eventRecords) && eventRecords.length) {
-    const filteredEvents = filterEntriesByRange(
-      eventRecords.filter((entry) => entry.exam === exam),
-      range
-    );
-    return aggregateLeaderboardEntries(filteredEvents);
-  }
-
-  const legacyRecords = readJson(LOCAL_LEADERBOARD_KEY, [])
-    .filter((entry) => entry.exam === exam);
-  return sortLeaderboard(filterEntriesByRange(legacyRecords, range));
+  const filteredEvents = filterEntriesByRange(
+    eventRecords.filter((entry) => entry.exam === exam),
+    range
+  );
+  return aggregateLeaderboardEntries(filteredEvents);
 }
 
 function updateLocalLeaderboard(username, exam, points, score) {
+  migrateLegacyLeaderboard();
   const timestamp = new Date().toISOString();
+  const currentUser = readJson("rrbCurrentUser", {});
+  const email = currentUser.email || username;
 
   const eventRecords = readJson(LOCAL_LEADERBOARD_EVENTS_KEY, []);
   eventRecords.unshift({
     username,
+    email,
     exam,
     points,
     tests_done: 1,
@@ -124,30 +150,6 @@ function updateLocalLeaderboard(username, exam, points, score) {
   });
   saveJson(LOCAL_LEADERBOARD_EVENTS_KEY, eventRecords.slice(0, 2000));
 
-  const records = readJson(LOCAL_LEADERBOARD_KEY, []);
-  const existingIndex = records.findIndex((entry) => entry.username === username && entry.exam === exam);
-
-  if (existingIndex >= 0) {
-    const current = records[existingIndex];
-    records[existingIndex] = {
-      ...current,
-      points: Number(current.points || 0) + Number(points || 0),
-      tests_done: Number(current.tests_done || 0) + 1,
-      best_score: Math.max(Number(current.best_score || 0), Number(score || 0)),
-      updated_at: timestamp
-    };
-  } else {
-    records.push({
-      username,
-      exam,
-      points,
-      tests_done: 1,
-      best_score: score || 0,
-      updated_at: timestamp
-    });
-  }
-
-  saveJson(LOCAL_LEADERBOARD_KEY, records);
   return getLocalLeaderboard(exam);
 }
 

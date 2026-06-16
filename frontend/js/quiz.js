@@ -1,6 +1,6 @@
-import { generateQuestions, getExplanation } from "./api.js?v=20260604eis";
-import { STORAGE_KEYS, getExamSpecificKey, getCurrentExam, readJson, saveJson, pruneHistoryRecords, pruneSavedPapers } from "./app.js?v=20260513c";
-import { getExamPattern } from "./exam-patterns.js?v=20260513c";
+import { generateQuestions, getExplanation } from "./api.js?v=20260513c";
+import { STORAGE_KEYS, getExamSpecificKey, getCurrentExam, readJson, saveJson, pruneHistoryRecords, pruneSavedPapers, setupThemeToggle, applyTheme, escapeHtml } from "./app.js?v=20260513c";
+import { getExamPattern, ACTIVE_EXAMS, sanitizeActiveExam } from "./exam-patterns.js?v=20260513c";
 import { calculateLeaderboardPoints, updateLeaderboard } from "./leaderboard.js?v=20260513c";
 
 const MODE_LABELS = {
@@ -21,60 +21,6 @@ const DIFFICULTY_LABELS = {
   intermediate: "Intermediate",
   advanced: "Advanced"
 };
-
-const ACTIVE_EXAMS = ["RRB NTPC", "RRB Group D", "RRB Technician Grade 3"];
-const THEME_STORAGE_KEY = "rrb_theme";
-
-function sanitizeActiveExam(examName) {
-  return ACTIVE_EXAMS.includes(examName) ? examName : "RRB NTPC";
-}
-
-function getStoredTheme() {
-  return localStorage.getItem(THEME_STORAGE_KEY) || "light";
-}
-
-function updateThemeToggleUi(theme) {
-  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
-    const icon = button.querySelector("[data-theme-icon]");
-    const label = button.querySelector("[data-theme-label]");
-    const nextMode = theme === "dark" ? "light" : "dark";
-
-    if (icon) {
-      icon.textContent = theme === "dark" ? "light_mode" : "dark_mode";
-    }
-
-    if (label) {
-      label.textContent = theme === "dark" ? "Light Mode" : "Dark Mode";
-    }
-
-    button.setAttribute("aria-label", `Switch to ${nextMode} mode`);
-    button.setAttribute("title", `Switch to ${nextMode} mode`);
-  });
-}
-
-function applyTheme(theme = getStoredTheme()) {
-  const useDark = theme === "dark";
-  document.body.classList.toggle("dark-mode", useDark);
-  document.documentElement.classList.toggle("dark", useDark);
-  updateThemeToggleUi(useDark ? "dark" : "light");
-}
-
-function setupThemeToggle() {
-  applyTheme();
-
-  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
-    if (button.dataset.themeBound === "true") {
-      return;
-    }
-
-    button.dataset.themeBound = "true";
-    button.addEventListener("click", () => {
-      const nextTheme = document.body.classList.contains("dark-mode") ? "light" : "dark";
-      localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-      applyTheme(nextTheme);
-    });
-  });
-}
 
 function createCustomQuestionSetConfig({
   exam,
@@ -132,14 +78,6 @@ function getSectionInsight(accuracy) {
   };
 }
 
-function escapeHtml(text) {
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
 
 function showToast(message, type = "success") {
   const toast = document.createElement("div");
@@ -302,7 +240,8 @@ async function generateSectionQuestionsInBatches({
   drillTopics = [],
   onStatus = null,
   forceDb = false,
-  forceAi = false
+  forceAi = false,
+  signal = null
 }) {
   const batchSize = forceAi ? 5 : (mode === "final-mock" ? 12 : count);
   const collectedQuestions = [];
@@ -336,7 +275,8 @@ async function generateSectionQuestionsInBatches({
         drillTopics,
         onStatus,
         forceDb,
-        forceAi
+        forceAi,
+        signal
       }
     );
 
@@ -591,7 +531,7 @@ async function setupQuizPage() {
   if (!quizRoot) {
     return;
   }
-
+  const backgroundFetchController = new AbortController();
   const currentUser = readJson(STORAGE_KEYS.currentUser);
   if (!currentUser) {
     window.location.href = "./login.html";
@@ -814,6 +754,11 @@ async function setupQuizPage() {
   }, {});
 
   const finishQuiz = (questions, answers, reviewFlags) => {
+    try {
+      backgroundFetchController.abort();
+    } catch (e) {
+      console.warn("Failed to abort background fetch:", e);
+    }
     const correctAnswers = answers.reduce((total, answer, index) => total + (answer === questions[index].ans ? 1 : 0), 0);
     const wrongAnswers = answers.reduce((total, answer, index) => total + (answer !== null && answer !== questions[index].ans ? 1 : 0), 0);
     const unansweredAnswers = answers.reduce((total, answer) => total + (answer === null ? 1 : 0), 0);
@@ -933,7 +878,6 @@ async function setupQuizPage() {
 
   try {
     setLoadingStatus("Reading saved test settings...");
-    const currentExam = getCurrentExam();
     const recentQuestionsKey = getExamSpecificKey(STORAGE_KEYS.recentQuestions, currentExam);
     const recentPatternsKey = getExamSpecificKey(STORAGE_KEYS.recentPatterns, currentExam);
     const recentQuestions = readJson(recentQuestionsKey, []);
@@ -1095,24 +1039,33 @@ async function setupQuizPage() {
         }
       }
 
-      const generatedSectionCounts = examPattern.sections.reduce((accumulator, section) => {
+      const finalSectionQuestions = [];
+      for (const section of examPattern.sections) {
         const key = section.label || section.subject;
-        accumulator[key] = sectionQuestions.filter((question) => (question.section || question.subject) === key).length;
-        return accumulator;
-      }, {});
+        const currentQuestions = sectionQuestions.filter((q) => q.section === key);
 
-      const hasMismatch = examPattern.sections.some((section) => {
-        const key = section.label || section.subject;
-        return generatedSectionCounts[key] !== section.count;
-      });
+        if (currentQuestions.length < section.count) {
+          const needed = section.count - currentQuestions.length;
+          for (let i = 0; i < needed; i++) {
+            currentQuestions.push({
+              placeholder: true,
+              q: "Generating unique exam questions via RRB AI Coach...",
+              opts: ["A) Option A", "B) Option B", "C) Option C", "D) Option D"],
+              ans: 0,
+              section: key,
+              sectionSubject: section.subject
+            });
+          }
+        } else if (currentQuestions.length > section.count) {
+          currentQuestions.splice(section.count);
+        }
 
-      if (sectionQuestions.length !== examPattern.totalQuestions || hasMismatch) {
-        throw new Error(`Final mock pattern mismatch for ${currentExam}${currentStage ? ` ${currentStage}` : ""}. Please try again.`);
+        finalSectionQuestions.push(...currentQuestions);
       }
 
       return {
         paperId: createPaperId(),
-        questions: sectionQuestions
+        questions: finalSectionQuestions
       };
     };
 
@@ -1474,7 +1427,7 @@ async function setupQuizPage() {
         return;
       }
 
-      console.log(`Background AI fetch started for ${placeholders.length} placeholders`);
+
       let hadFallbackError = false;
 
       const sectionsWithPlaceholders = {};
@@ -1498,7 +1451,7 @@ async function setupQuizPage() {
           .map((q) => q.q);
 
         try {
-          console.log(`Fetching ${aiCount} AI questions for ${subjectKey}...`);
+
 
           const apiOptions = {
             stage: currentStage,
@@ -1526,7 +1479,8 @@ async function setupQuizPage() {
             chapterQuestionMode: config.chapterQuestionMode || "",
             drillTopics: config.drillTopics || [],
             onStatus: null,
-            forceAi: true
+            forceAi: true,
+            signal: backgroundFetchController.signal
           });
 
           if (!generated || generated.length === 0) {
@@ -1544,7 +1498,7 @@ async function setupQuizPage() {
             }
           });
 
-          console.log(`Successfully loaded AI questions for ${subjectKey}`);
+
         } catch (err) {
           console.warn(`Failed to fetch AI questions for ${subjectKey}, falling back to local DB:`, err);
           try {
@@ -1577,7 +1531,7 @@ async function setupQuizPage() {
                 };
               }
             });
-            console.log(`Successfully loaded fallback local questions for ${subjectKey}`);
+
           } catch (fallbackErr) {
             console.error(`Double failure: both AI and fallback local questions failed for ${subjectKey}:`, fallbackErr);
             hadFallbackError = true;
@@ -1967,7 +1921,6 @@ function setupScorePage() {
         lastSubject: retrySubject,
         lastTopic: ""
       });
-      localStorage.setItem("selectedExam", currentExam);
       window.location.href = "./dashboard.html";
     });
   }
@@ -2023,8 +1976,6 @@ function setupScorePage() {
       index === collection.findIndex((entry) =>
         entry.exam === item.exam
         && entry.question === item.question
-        && entry.subject === item.subject
-        && entry.topic === item.topic
       )
     );
     saveJson(STORAGE_KEYS.wrongQuestions, mergedWrongQuestions.slice(0, 320));
@@ -2144,6 +2095,7 @@ function setupScorePage() {
         }
 
         renderExplanationBox(box, response, payload);
+        prefetchCache.delete(index);
         button.textContent = "Solution Loaded";
         if (status) {
           status.textContent = response.cached ? "Cached explanation" : "Generated and saved";

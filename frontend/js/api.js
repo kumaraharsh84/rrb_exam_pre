@@ -1,4 +1,5 @@
 import { getQuestionBankEntries, toQuestionShape } from "./question-bank.js";
+import { ACTIVE_EXAMS, sanitizeActiveExam } from "./exam-patterns.js";
 
 const REMOTE_API_GATEWAY_URL = "https://v50dh7wl24.execute-api.ap-south-1.amazonaws.com/prod/generate";
 const API_GATEWAY_URL = ["localhost", "127.0.0.1"].includes(window.location.hostname)
@@ -7,12 +8,8 @@ const API_GATEWAY_URL = ["localhost", "127.0.0.1"].includes(window.location.host
 const EXPLANATION_API_URL = ["localhost", "127.0.0.1"].includes(window.location.hostname)
   ? `${window.location.origin}/api/explanation`
   : REMOTE_API_GATEWAY_URL.replace(/\/generate$/, "/explanation");
-const ACTIVE_EXAMS = ["RRB NTPC", "RRB Group D", "RRB Technician Grade 3"];
+const isLocalhost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
 const API_TIMEOUT_MS = 45000;
-
-function sanitizeActiveExam(examName) {
-  return ACTIVE_EXAMS.includes(examName) ? examName : "RRB NTPC";
-}
 
 function shuffle(items) {
   const copy = [...items];
@@ -50,7 +47,7 @@ async function pickBankQuestions(subject, topic, difficulty, count, excludeQuest
     }
     seenPatterns.add(pattern);
     selected.push(question);
-    if (selected.length >= Math.min(count, normalized.length)) {
+    if (selected.length >= count) {
       break;
     }
   }
@@ -89,6 +86,14 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = API_TIMEOUT_MS) {
   const controller = new AbortController();
   const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
 
+  if (options.signal) {
+    if (options.signal.aborted) {
+      controller.abort();
+    } else {
+      options.signal.addEventListener("abort", () => controller.abort(), { once: true });
+    }
+  }
+
   try {
     return await fetch(url, {
       ...options,
@@ -125,7 +130,7 @@ function normalizeApiResponse(payload) {
 export async function generateQuestions(subject, topic, count, mode = "practice", excludeQuestions = [], exam = "RRB NTPC", difficulty = "intermediate", excludePatterns = [], requestOptions = {}) {
   const activeExam = sanitizeActiveExam(exam);
   const reportStatus = typeof requestOptions.onStatus === "function" ? requestOptions.onStatus : null;
-  const isApiMissing = API_GATEWAY_URL.includes("xxxxxxxx");
+  const isApiMissing = !API_GATEWAY_URL || API_GATEWAY_URL.includes("xxxxxxxx") || API_GATEWAY_URL.startsWith("__REPLACE_ME__") || API_GATEWAY_URL.includes("placeholder");
   
   // If forceAi is requested, we bypass the local question bank entirely to request strictly AI questions
   const forceAi = !!requestOptions.forceAi;
@@ -216,7 +221,8 @@ export async function generateQuestions(subject, topic, count, mode = "practice"
       const response = await fetchWithTimeout(API_GATEWAY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: requestOptions.signal
       });
 
       if (!response.ok) {

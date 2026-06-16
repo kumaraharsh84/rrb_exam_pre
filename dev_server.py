@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-SERVE_ROOT = PROJECT_ROOT.parent
+SERVE_ROOT = PROJECT_ROOT
 BACKEND_ROOT = PROJECT_ROOT / "backend"
 
 if str(BACKEND_ROOT) not in sys.path:
@@ -102,7 +102,7 @@ def main():
     print("  RRB AI Practice Center - Local Dev Server")
     print("==============================================")
     print(f"Serving static files from: {SERVE_ROOT}")
-    print(f"Frontend URL: http://localhost:{port}/rrb-exam-prep/frontend/login.html")
+    print(f"Frontend URL: http://localhost:{port}/frontend/login.html")
     print(f"Proxy URL:    http://localhost:{port}/api/generate")
     print(f"Explain URL:  http://localhost:{port}/api/explanation")
     print()

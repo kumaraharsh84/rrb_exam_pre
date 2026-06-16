@@ -1,4 +1,5 @@
 let questionBankPromise = null;
+const entriesCache = new Map();
 
 function normalize(text) {
   return String(text || "").trim().toLowerCase();
@@ -6,12 +7,17 @@ function normalize(text) {
 
 async function loadQuestionBank() {
   if (!questionBankPromise) {
-    questionBankPromise = fetch("./data/question-bank.json").then(async (response) => {
-      if (!response.ok) {
-        throw new Error(`Question bank failed to load: ${response.status}`);
-      }
-      return response.json();
-    });
+    questionBankPromise = fetch("./data/question-bank.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Question bank failed to load: ${response.status}`);
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        questionBankPromise = null;
+        throw error;
+      });
   }
 
   return questionBankPromise;
@@ -36,8 +42,13 @@ function scoreEntry(entry, subject, topic) {
 }
 
 export async function getQuestionBankEntries(subject, topic, difficulty, count = 10) {
+  const cacheKey = `${normalize(subject)}|${normalize(topic)}|${normalize(difficulty)}|${count}`;
+  if (entriesCache.has(cacheKey)) {
+    return entriesCache.get(cacheKey);
+  }
+
   const bank = await loadQuestionBank();
-  return bank
+  const result = bank
     .filter((entry) => {
       if (subject && normalize(subject) !== "") {
         if (normalize(entry.subject) !== normalize(subject)) {
@@ -61,6 +72,9 @@ export async function getQuestionBankEntries(subject, topic, difficulty, count =
     .filter((entry) => entry._score > 0)
     .sort((left, right) => right._score - left._score || right.year - left.year)
     .slice(0, count);
+
+  entriesCache.set(cacheKey, result);
+  return result;
 }
 
 export function toQuestionShape(entries) {

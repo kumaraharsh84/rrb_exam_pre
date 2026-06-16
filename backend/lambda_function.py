@@ -44,7 +44,6 @@ load_env_file()
 # REGION / MODEL
 # ================================================================
 
-AWS_REGION = os.getenv("AWS_REGION", "ap-south-1")
 BEDROCK_REGION = os.getenv("BEDROCK_REGION", "us-west-2")
 NOVA_MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "apac.amazon.nova-pro-v1:0")
 LLAMA_MODEL_ID = os.getenv("LLAMA_MODEL_ID", "us.meta.llama3-1-70b-instruct-v1:0")
@@ -703,12 +702,13 @@ TIME_DISTANCE_PRACTICE_BANK = [
 # ================================================================
 
 def lambda_handler(event, context):
-    # NEW: track how long the whole request takes
     start_time = time.time()
 
     http_method = event.get("httpMethod") or event.get("requestContext", {}).get("http", {}).get("method")
     if http_method == "OPTIONS":
-        return {"statusCode": 200, "headers": cors_headers(), "body": ""}
+        headers = cors_headers()
+        headers.pop("Content-Type", None)
+        return {"statusCode": 204, "headers": headers, "body": ""}
 
     try:
         raw_body = event.get("body")
@@ -729,6 +729,12 @@ def lambda_handler(event, context):
         subject = body.get("subject", "Mathematics")
         topic = body.get("topic", "Percentage")
         count = int(body.get("count", 10))
+        if count <= 0 or count > 200:
+            return {
+                "statusCode": 400,
+                "headers": cors_headers(),
+                "body": json.dumps({"error": "Batch count must be between 1 and 200", "questions": []})
+            }
         mode = body.get("mode", "practice")
         difficulty = body.get("difficulty", "medium")
         selected_chapters = body.get("selectedChapters", [])
@@ -3739,6 +3745,24 @@ def error_response(message):
         "headers": cors_headers(),
         "body": json.dumps({"error": message, "questions": []})
     }
+
+
+if __name__ == "__main__":
+    import sys
+    sample_event = {
+        "body": json.dumps({
+            "exam": "RRB NTPC",
+            "subject": "Mathematics",
+            "topic": "Percentage",
+            "count": 2,
+            "mode": "practice",
+            "difficulty": "medium"
+        })
+    }
+    print("Running local lambda smoke test...")
+    response_data = lambda_handler(sample_event, None)
+    print("Status:", response_data.get("statusCode"))
+    print("Body:", response_data.get("body")[:500] + "...")
 
 
 

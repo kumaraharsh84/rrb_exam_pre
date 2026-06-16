@@ -1,6 +1,15 @@
-import { getExamPattern } from "./exam-patterns.js?v=20260513c";
+import { getExamPattern, ACTIVE_EXAMS, sanitizeActiveExam } from "./exam-patterns.js?v=20260513c";
 import { TOPICS } from "./rrb-syllabus-data.js?v=20260513c";
 import { renderLeaderboard } from "./leaderboard.js?v=20260513c";
+
+export function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 const STORAGE_KEYS = {
   profile: "rrbQuizProfile",
@@ -13,7 +22,7 @@ const STORAGE_KEYS = {
   savedPapers: "rrbSavedPapers",
   bookmarks: "rrbQuizBookmarks",
   mistakes: "rrbQuizMistakes",
-  wrongQuestions: "rrb_wrong_questions",
+  wrongQuestions: "rrbWrongQuestions",
   replayQuestions: "rrbReplayQuestions",
   recentQuestions: "rrbRecentQuestions",
   recentPatterns: "rrbRecentPatterns",
@@ -23,13 +32,21 @@ const STORAGE_KEYS = {
   results: "rrbQuizResults"
 };
 
+// Migration: Migrate wrongQuestions from snake_case key to camelCase
+try {
+  const legacyWrongKey = "rrb_wrong_questions";
+  const legacyData = localStorage.getItem(legacyWrongKey);
+  if (legacyData) {
+    localStorage.setItem(STORAGE_KEYS.wrongQuestions, legacyData);
+    localStorage.removeItem(legacyWrongKey);
+  }
+} catch (e) {
+  console.warn("Could not migrate legacy wrongQuestions key", e);
+}
+
 const FRONTEND_BUILD_TOKEN = "20260513c";
 
-const AVAILABLE_EXAMS = [
-  "RRB NTPC",
-  "RRB Group D",
-  "RRB Technician Grade 3"
-];
+const AVAILABLE_EXAMS = ACTIVE_EXAMS;
 
 const EXAM_BRANCH_OPTIONS = {};
 
@@ -92,11 +109,13 @@ function getExamSpecificKey(baseKey, exam) {
 
 // Helper function to get current selected exam
 function getCurrentExam() {
-  return sanitizeExamName(localStorage.getItem("selectedExam"));
+  const currentUserState = readJson(STORAGE_KEYS.currentUser, {});
+  const profileState = readJson(STORAGE_KEYS.profile, {});
+  return sanitizeExamName(profileState.preferredExam || currentUserState.preferredExam || "RRB NTPC");
 }
 
 function sanitizeExamName(examName) {
-  return AVAILABLE_EXAMS.includes(examName) ? examName : "RRB NTPC";
+  return sanitizeActiveExam(examName);
 }
 
 function getCurrentExamContext() {
@@ -104,7 +123,7 @@ function getCurrentExamContext() {
   const profileState = readJson(STORAGE_KEYS.profile, {});
 
   return {
-    exam: sanitizeExamName(profileState.preferredExam || currentUserState.preferredExam || getCurrentExam()),
+    exam: getCurrentExam(),
     stage: profileState.preferredStage || currentUserState.preferredStage || "",
     branch: profileState.preferredBranch || currentUserState.preferredBranch || ""
   };
@@ -178,7 +197,11 @@ const EXAM_STAGE_SUBJECT_TOPICS = {};
 const EXAM_STAGE_OPTIONS = {};
 
 export function saveJson(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error("Failed to write to localStorage:", error);
+  }
 }
 
 export function readJson(key, fallback = null) {
@@ -224,8 +247,21 @@ function getCutoffDate() {
 }
 
 export function pruneHistoryRecords(history = []) {
+  if (history.length <= 1) return history;
   const cutoff = getCutoffDate().getTime();
+
+  let mostRecent = null;
+  let maxTime = -Infinity;
+  for (const attempt of history) {
+    const t = new Date(attempt.completedAt || 0).getTime();
+    if (Number.isFinite(t) && t > maxTime) {
+      maxTime = t;
+      mostRecent = attempt;
+    }
+  }
+
   return history.filter((attempt) => {
+    if (attempt === mostRecent) return true;
     const completedAt = new Date(attempt.completedAt || 0).getTime();
     return Number.isFinite(completedAt) && completedAt >= cutoff;
   });
@@ -240,14 +276,13 @@ export function pruneSavedPapers(papers = []) {
 }
 
 function dedupeAttempts(attempts = []) {
-  return attempts.filter((attempt, index, allAttempts) => index === allAttempts.findIndex((entry) =>
-    entry.completedAt === attempt.completedAt
-    && entry.paperId === attempt.paperId
-    && entry.subject === attempt.subject
-    && entry.topic === attempt.topic
-    && entry.score === attempt.score
-    && entry.total === attempt.total
-  ));
+  const seen = new Set();
+  return attempts.filter((attempt) => {
+    const key = `${attempt.completedAt}_${attempt.paperId}_${attempt.subject}_${attempt.topic}_${attempt.score}_${attempt.total}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function sortAttemptsDescending(attempts = []) {
@@ -260,15 +295,22 @@ function getHistoryBuckets() {
   const currentExam = getCurrentExam();
   const historyKey = getExamSpecificKey(STORAGE_KEYS.history, currentExam);
   const finalMockHistoryKey = getExamSpecificKey(STORAGE_KEYS.finalMockHistory, currentExam);
-  const rawHistory = pruneHistoryRecords(readJson(historyKey, []));
-  const rawFinalMockHistory = pruneHistoryRecords(readJson(finalMockHistoryKey, []));
+  const storedHistory = readJson(historyKey, []);
+  const storedFinalMockHistory = readJson(finalMockHistoryKey, []);
+
+  const rawHistory = pruneHistoryRecords(storedHistory);
+  const rawFinalMockHistory = pruneHistoryRecords(storedFinalMockHistory);
   const combined = [...rawHistory, ...rawFinalMockHistory];
 
   const standardHistory = sortAttemptsDescending(dedupeAttempts(combined.filter((attempt) => attempt.modeLabel !== "Final Mock")));
   const finalMockHistory = sortAttemptsDescending(dedupeAttempts(combined.filter((attempt) => attempt.modeLabel === "Final Mock")));
 
-  saveJson(historyKey, standardHistory);
-  saveJson(finalMockHistoryKey, finalMockHistory);
+  if (JSON.stringify(storedHistory) !== JSON.stringify(standardHistory)) {
+    saveJson(historyKey, standardHistory);
+  }
+  if (JSON.stringify(storedFinalMockHistory) !== JSON.stringify(finalMockHistory)) {
+    saveJson(finalMockHistoryKey, finalMockHistory);
+  }
 
   return {
     standardHistory,
@@ -420,7 +462,7 @@ function syncTopicOptions(examName, stage, branch, subject, topicSelect, topicHi
 
   if (topicHint) {
     const stageSuffix = stage ? ` ${stage}` : "";
-    topicHint.textContent = `${examName}${stageSuffix} ke ${getSubjectDisplayName(examName, stage, activeSubject || subject)} topics yahan dikh rahe hain.`;
+    topicHint.textContent = `Showing ${getSubjectDisplayName(examName, stage, activeSubject || subject)} topics for ${examName}${stageSuffix}.`;
   }
 }
 
@@ -866,16 +908,7 @@ function renderMistakes() {
   }
 
   const currentExam = getCurrentExam();
-  const mistakesKey = getExamSpecificKey(STORAGE_KEYS.mistakes, currentExam);
-  const scopedMistakes = readJson(mistakesKey, []);
-  const legacyMistakes = scopedMistakes.length
-    ? []
-    : readJson(STORAGE_KEYS.mistakes, []).filter((item) => (item.exam || "RRB NTPC") === currentExam);
-  const mistakes = scopedMistakes.length ? scopedMistakes : legacyMistakes;
-
-  if (!scopedMistakes.length && legacyMistakes.length) {
-    saveJson(mistakesKey, legacyMistakes.slice(0, 220));
-  }
+  const { mistakesKey, mistakes } = getScopedMistakesForExam(currentExam);
 
   if (!mistakes.length) {
     mistakeList.innerHTML = `
@@ -982,16 +1015,24 @@ function renderMistakes() {
 function getScopedMistakesForExam(currentExam) {
   const mistakesKey = getExamSpecificKey(STORAGE_KEYS.mistakes, currentExam);
   const scopedMistakes = readJson(mistakesKey, []);
-  const legacyMistakes = scopedMistakes.length
-    ? []
-    : readJson(STORAGE_KEYS.mistakes, []).filter((item) => (item.exam || "RRB NTPC") === currentExam);
-  const mistakes = scopedMistakes.length ? scopedMistakes : legacyMistakes;
-
-  if (!scopedMistakes.length && legacyMistakes.length) {
-    saveJson(mistakesKey, legacyMistakes.slice(0, 220));
+  if (scopedMistakes.length) {
+    return { mistakesKey, mistakes: scopedMistakes };
   }
 
-  return { mistakesKey, mistakes };
+  const allLegacy = readJson(STORAGE_KEYS.mistakes, []);
+  const legacyMistakes = allLegacy.filter((item) => (item.exam || "RRB NTPC") === currentExam);
+  const remaining = allLegacy.filter((item) => (item.exam || "RRB NTPC") !== currentExam);
+
+  if (legacyMistakes.length) {
+    saveJson(mistakesKey, legacyMistakes.slice(0, 220));
+    if (remaining.length) {
+      saveJson(STORAGE_KEYS.mistakes, remaining);
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.mistakes);
+    }
+  }
+
+  return { mistakesKey, mistakes: legacyMistakes };
 }
 
 function normalizeRevisionTimestamp(value) {
@@ -1287,7 +1328,6 @@ function renderAnalytics() {
       lastSubject: weakestSubject.subject,
       lastTopic: ""
     });
-    localStorage.setItem("selectedExam", activeExam);
     saveJson(
       STORAGE_KEYS.config,
       buildWeakSubjectPracticeConfig(activeExam, activeStage, activeBranch, weakestSubject.subject, weakestSubject.accuracy)
@@ -1438,7 +1478,6 @@ function setupUtilityPage() {
   const activeExam = sanitizeExamName(profile.preferredExam || currentUser.preferredExam || "RRB NTPC");
   const activeStage = profile.preferredStage || currentUser.preferredStage || "";
   const activeBranch = profile.preferredBranch || currentUser.preferredBranch || "";
-  localStorage.setItem("selectedExam", activeExam);
 
   document.querySelectorAll("[data-nav-key]").forEach((link) => {
     link.classList.toggle("active", link.dataset.navKey === pageKey);
@@ -2815,6 +2854,10 @@ function setupLoginPage() {
   if (!authForm) {
     return;
   }
+  if (authForm.dataset.authBound === "true") {
+    return;
+  }
+  authForm.dataset.authBound = "true";
 
   const authName = document.querySelector("#auth-name");
   const authEmail = document.querySelector("#auth-email");
@@ -2851,7 +2894,15 @@ function setupLoginPage() {
     window.location.href = "./exam-select.html";
   };
 
-  authForm.addEventListener("submit", (event) => {
+  async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode("rrb_prep_salt_" + password);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  authForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (authMode === "signup") {
@@ -2870,7 +2921,8 @@ function setupLoginPage() {
         return;
       }
 
-      const newUser = { name, email, password, preferredExam: "" };
+      const hashedPassword = await hashPassword(password);
+      const newUser = { name, email, password: hashedPassword, preferredExam: "" };
       saveJson(STORAGE_KEYS.authUsers, [newUser, ...users]);
       authMessage.textContent = "Account created. Redirecting...";
       completeLogin(newUser);
@@ -2880,14 +2932,20 @@ function setupLoginPage() {
     const users = readJson(STORAGE_KEYS.authUsers, []);
     const email = authEmail?.value.trim().toLowerCase() || "";
     const password = authPassword?.value || "";
-    const user = users.find((entry) => entry.email === email && entry.password === password);
 
     if (!email || password.length < 4) {
       authMessage.textContent = "Email and password (min 4 chars) required.";
       return;
     }
 
+    const hashedPassword = await hashPassword(password);
+    const user = users.find((entry) => entry.email === email && (entry.password === hashedPassword || entry.password === password));
+
     if (user) {
+      if (user.password === password) {
+        user.password = hashedPassword;
+        saveJson(STORAGE_KEYS.authUsers, users);
+      }
       authMessage.textContent = "Signed in successfully. Redirecting...";
       completeLogin(user);
       return;
@@ -2902,7 +2960,7 @@ function setupLoginPage() {
     const demoUser = {
       name: authName?.value.trim() || "Learner",
       email,
-      password,
+      password: hashedPassword,
       preferredExam: ""
     };
     saveJson(STORAGE_KEYS.authUsers, [demoUser, ...users]);
@@ -2928,7 +2986,10 @@ export {
   renderWrongQuestions,
   renderLastAttemptCard,
   renderFinalMockHistory,
-  renderExamDashboard
+  renderExamDashboard,
+  setupThemeToggle,
+  applyTheme,
+  escapeHtml
 };
 
 

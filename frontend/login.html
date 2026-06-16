@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('rrb_theme') || 'light';
-        if (theme === 'dark') {
-          document.documentElement.classList.remove('light');
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) {}
-    })();
-  </script>
+  <script src="./js/theme-init.js?v=20260513c"></script>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Login | The Academic Edge</title>
@@ -67,7 +57,7 @@
       cursor: pointer;
     }
     body {
-      background: #f5f7fb;
+      background: var(--bg-main);
     }
     .auth-tab.active {
       background: var(--bg-sidebar);
@@ -116,7 +106,7 @@
     }
     .auth-shell {
       box-shadow: var(--shadow-soft);
-      background: #ffffff;
+      background: var(--bg-surface);
     }
     .hero-shell {
       background: linear-gradient(180deg, #001814 0%, #012a23 100%);
@@ -126,7 +116,7 @@
       border-color: rgba(125, 227, 214, 0.12);
     }
     .auth-panel {
-      background: #ffffff;
+      background: var(--bg-surface);
     }
     .auth-heading {
       color: var(--text-main) !important;
@@ -137,7 +127,7 @@
       box-shadow: none !important;
     }
     .auth-note {
-      background: #eef2f8;
+      background: var(--bg-elevated);
       color: #42526b;
     }
     body.dark-mode input::placeholder {
@@ -176,16 +166,7 @@
   </style>
 </head>
 <body class="min-h-screen overflow-y-auto bg-background text-on-surface">
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('rrb_theme') || 'light';
-        if (theme === 'dark') {
-          document.body.classList.add('dark-mode');
-        }
-      } catch (e) {}
-    })();
-  </script>
+
   
   <main class="flex min-h-screen items-center justify-center p-4 md:p-8 lg:p-12">
     <div class="auth-shell grid w-full max-w-6xl overflow-hidden rounded-2xl bg-surface-container-lowest lg:grid-cols-12">
@@ -229,7 +210,7 @@
             <button id="signin-tab" class="auth-tab active rounded-xl px-4 py-3 text-sm font-semibold transition-all" type="button">Sign In</button>
             <button id="signup-tab" class="auth-tab rounded-xl px-4 py-3 text-sm font-semibold text-on-surface-variant transition-all" type="button">Create Account</button>
           </div>
-          <form id="auth-form" class="space-y-5">
+          <form id="auth-form" class="space-y-5" onsubmit="event.preventDefault()">
             <label id="name-field" class="hidden space-y-2">
               <span class="ml-1 block text-xs font-semibold uppercase tracking-widest text-on-surface-variant">Full Name</span>
               <input id="auth-name" class="auth-input w-full rounded-2xl border-none bg-surface-container-low px-4 py-4 text-on-surface placeholder:text-on-surface-variant focus:ring-2 focus:ring-primary" name="name" placeholder="Kumar" type="text" />
@@ -253,125 +234,7 @@
       </section>
     </div>
   </main>
-  <script type="module" src="./js/app.js"></script>
-  <script>
-    (() => {
-      const authForm = document.querySelector("#auth-form");
-      if (!authForm || authForm.dataset.fallbackBound === "true") {
-        return;
-      }
+  <script type="module" src="./js/app.js?v=20260513c"></script>
 
-      authForm.dataset.fallbackBound = "true";
-
-      const authName = document.querySelector("#auth-name");
-      const authEmail = document.querySelector("#auth-email");
-      const authPassword = document.querySelector("#auth-password");
-      const authMessage = document.querySelector("#auth-message");
-      const continueButton = document.querySelector("#auth-continue-button");
-      const signinTab = document.querySelector("#signin-tab");
-      const signupTab = document.querySelector("#signup-tab");
-      const nameField = document.querySelector("#name-field");
-      let authMode = "signin";
-
-      const readJson = (key, fallback) => {
-        try {
-          const raw = localStorage.getItem(key);
-          return raw ? JSON.parse(raw) : fallback;
-        } catch {
-          return fallback;
-        }
-      };
-
-      const saveJson = (key, value) => {
-        localStorage.setItem(key, JSON.stringify(value));
-      };
-
-      const setAuthMode = (mode) => {
-        authMode = mode;
-        const isSignup = mode === "signup";
-        nameField?.classList.toggle("hidden", !isSignup);
-        signinTab?.classList.toggle("active", !isSignup);
-        signupTab?.classList.toggle("active", isSignup);
-        signinTab?.classList.toggle("text-on-surface-variant", isSignup);
-        signupTab?.classList.toggle("text-on-surface-variant", !isSignup);
-        if (authMessage) {
-          authMessage.textContent = "";
-        }
-      };
-
-      const completeLogin = (user) => {
-        saveJson("rrbCurrentUser", user);
-        saveJson("rrbQuizProfile", {
-          name: user.name || "",
-          preferredExam: user.preferredExam || ""
-        });
-        window.location.href = "./exam-select.html";
-      };
-
-      signinTab?.addEventListener("click", () => setAuthMode("signin"));
-      signupTab?.addEventListener("click", () => setAuthMode("signup"));
-      setAuthMode("signin");
-
-      const handleAuthSubmit = () => {
-        const users = readJson("rrbAuthUsers", []);
-        const name = authName?.value.trim() || "Learner";
-        const email = authEmail?.value.trim().toLowerCase() || "";
-        const password = authPassword?.value || "";
-
-        if (authMode === "signup") {
-          if (!authName?.value.trim() || !email || password.length < 4) {
-            authMessage.textContent = "Name, email and password (min 4 chars) required.";
-            return false;
-          }
-
-          if (users.some((user) => user.email === email)) {
-            authMessage.textContent = "Account already exists. Please sign in.";
-            return false;
-          }
-
-          const newUser = { name, email, password, preferredExam: "" };
-          saveJson("rrbAuthUsers", [newUser, ...users]);
-          authMessage.textContent = "Account created. Redirecting...";
-          completeLogin(newUser);
-          return true;
-        }
-
-        if (!email || password.length < 4) {
-          authMessage.textContent = "Email and password (min 4 chars) required.";
-          return false;
-        }
-
-        const existingUser = users.find((entry) => entry.email === email);
-        const validUser = users.find((entry) => entry.email === email && entry.password === password);
-
-        if (validUser) {
-          authMessage.textContent = "Signed in successfully. Redirecting...";
-          completeLogin(validUser);
-          return true;
-        }
-
-        if (existingUser) {
-          authMessage.textContent = "Invalid email or password.";
-          return false;
-        }
-
-        const demoUser = { name, email, password, preferredExam: "" };
-        saveJson("rrbAuthUsers", [demoUser, ...users]);
-        authMessage.textContent = "Demo access created. Redirecting...";
-        completeLogin(demoUser);
-        return true;
-      };
-
-      authForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        handleAuthSubmit();
-      });
-
-      continueButton?.addEventListener("click", (event) => {
-        event.preventDefault();
-        handleAuthSubmit();
-      });
-    })();
-  </script>
 </body>
 </html>

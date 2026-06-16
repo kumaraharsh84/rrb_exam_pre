@@ -9,3 +9,11 @@ __pycache__/
 dist/
 .env
 backend/.env
+
+# Source paper binaries (do not track large PDFs and executables)
+question-bank-source-papers/**/*.pdf
+question-bank-source-papers/**/*.exe
+*.exe
+
+# Frontend config with real credentials
+frontend/js/config.js

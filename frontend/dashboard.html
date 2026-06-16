@@ -1,33 +1,13 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('rrb_theme') || 'light';
-        if (theme === 'dark') {
-          document.documentElement.classList.remove('light');
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) {}
-    })();
-  </script>
+  <script src="./js/theme-init.js?v=20260513c"></script>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>The Academic Edge | Study Control Center</title>
-  <script>
-    (() => {
-      const buildToken = "20260513c";
-      const url = new URL(window.location.href);
-      if (url.searchParams.get("v") !== buildToken) {
-        url.searchParams.set("v", buildToken);
-        window.location.replace(url.toString());
-      }
-    })();
-  </script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
@@ -80,7 +60,7 @@
       cursor: pointer;
     }
     body {
-      background: #f5f7fb;
+      background: var(--bg-main);
     }
     .tab-btn.active { background: var(--primary); color: var(--bg-surface); }
     .practice-type-btn.active { border-color: var(--primary); box-shadow: 0 14px 28px color-mix(in srgb, var(--primary) 12%, transparent); }
@@ -203,7 +183,7 @@
       color: #f7f7fb;
     }
     .dashboard-page {
-      background: #f5f7fb;
+      background: var(--bg-main);
     }
     .brand-mark {
       background: var(--bg-sidebar);
@@ -217,7 +197,7 @@
     .profile-trigger,
     .profile-panel-secondary,
     .profile-name-input {
-      background: #eef2f8;
+      background: var(--bg-elevated);
     }
     .primary-action {
       background: var(--bg-sidebar);
@@ -425,16 +405,6 @@
   </style>
 </head>
 <body class="dashboard-page min-h-screen bg-background text-on-surface">
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('rrb_theme') || 'light';
-        if (theme === 'dark') {
-          document.body.classList.add('dark-mode');
-        }
-      } catch (e) {}
-    })();
-  </script>
   <header class="sticky top-0 z-50 bg-background">
     <nav class="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-6 py-3">
       <div class="font-headline text-xl font-bold tracking-tight text-primary">The Academic Edge</div>
@@ -482,7 +452,7 @@
         <nav class="space-y-1">
           <a class="sidebar-tab-link active" data-nav-key="home" href="./dashboard.html"><span class="material-symbols-outlined">home</span><span>Home</span></a>
           <a class="sidebar-tab-link" data-nav-key="history" href="./history.html"><span class="material-symbols-outlined">history</span><span>Test History</span></a>
-          <a class="sidebar-tab-link" data-nav-key="final-mock-history" href="./final-mock-history.html"><span class="material-symbols-outlined">timer</span><span>Final Mock History</span></a>
+          <a class="sidebar-tab-link" data-nav-key="final-mock-history" href="./history.html?view=final-mock"><span class="material-symbols-outlined">timer</span><span>Final Mock History</span></a>
           <a class="sidebar-tab-link" data-nav-key="bookmarks" href="./bookmarks.html"><span class="material-symbols-outlined">bookmark</span><span>Bookmarks</span></a>
           <a class="sidebar-tab-link" data-nav-key="wrong-questions" href="./wrong-questions.html"><span class="material-symbols-outlined">rule</span><span>Wrong Questions</span></a>
           <a class="sidebar-tab-link" data-nav-key="analysis" href="./analysis.html"><span class="material-symbols-outlined">analytics</span><span>Analysis</span></a>
@@ -495,7 +465,7 @@
       <nav class="flex gap-3 overflow-x-auto pb-1 lg:hidden">
         <a class="mobile-nav-link active" data-nav-key="home" href="./dashboard.html">Home</a>
         <a class="mobile-nav-link" data-nav-key="history" href="./history.html">Test History</a>
-        <a class="mobile-nav-link" data-nav-key="final-mock-history" href="./final-mock-history.html">Final Mock History</a>
+        <a class="mobile-nav-link" data-nav-key="final-mock-history" href="./history.html?view=final-mock">Final Mock History</a>
         <a class="mobile-nav-link" data-nav-key="bookmarks" href="./bookmarks.html">Bookmarks</a>
         <a class="mobile-nav-link" data-nav-key="wrong-questions" href="./wrong-questions.html">Wrong Questions</a>
         <a class="mobile-nav-link" data-nav-key="analysis" href="./analysis.html">Analysis</a>
@@ -515,7 +485,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-12">
           <div class="relative overflow-hidden rounded-[2rem] bg-surface-container-low p-8 md:col-span-8">
-            <form id="start-form" class="relative z-10">
+            <form id="start-form" class="relative z-10" onsubmit="event.preventDefault()">
               <h2 class="mb-6 flex items-center gap-2 font-headline text-2xl font-bold"><span class="material-symbols-outlined text-primary">tune</span>Subject Test Configuration</h2>
               <select id="exam" name="exam" class="hidden" aria-hidden="true" tabindex="-1">
                 <option value="RRB NTPC">RRB NTPC</option>
@@ -715,198 +685,6 @@
     </main>
   </div>
   <script type="module" src="./js/app.js?v=20260513c"></script>
-  <script type="module">
-    import { TOPICS } from "./js/rrb-syllabus-data.js?v=20260513c";
-
-    (() => {
-      const allowedExams = ["RRB NTPC", "RRB Group D", "RRB Technician Grade 3"];
-      const examIndicator = document.querySelector("#current-exam-indicator");
-      const examSelect = document.querySelector("#exam");
-      const stageSelect = document.querySelector("#stage");
-      const branchField = document.querySelector("#branch-field");
-      const branchSelect = document.querySelector("#branch");
-      const practiceTypeInput = document.querySelector("#practice-type");
-      const practiceTypeButtons = Array.from(document.querySelectorAll("[data-practice-type]"));
-
-      const chapterPracticePanel = document.querySelector("#chapter-practice-panel");
-      const subjectSelect = document.querySelector("#subject");
-      const topicSelect = document.querySelector("#topic");
-      const topicHint = document.querySelector("#topic-hint");
-
-      const normalizeLookupText = (value) =>
-        String(value || "")
-          .toLowerCase()
-          .replace(/&/g, "and")
-          .replace(/[^a-z0-9]+/g, " ")
-          .replace(/\s+/g, " ")
-          .trim();
-
-      const normalizeTopic = (value) =>
-        String(value || "")
-          .replace(/â€”/g, " - ")
-          .replace(/–/g, "-")
-          .replace(/\s+/g, " ")
-          .trim();
-
-      const normalizeMap = (map) => Object.fromEntries(
-        Object.entries(map || {}).map(([subject, topics]) => [
-          subject,
-          Array.isArray(topics) ? topics.map(normalizeTopic) : []
-        ])
-      );
-
-      const readJson = (key, fallback) => {
-        try {
-          const raw = localStorage.getItem(key);
-          return raw ? JSON.parse(raw) : fallback;
-        } catch {
-          return fallback;
-        }
-      };
-
-      const normalizeSubject = (value) =>
-        String(value || "")
-          .replace(/Ã¢â‚¬â€/g, " - ")
-          .replace(/â€”/g, " - ")
-          .replace(/â€“/g, "-")
-          .replace(/\s+/g, " ")
-          .trim();
-
-      const sanitizeExam = (examName) => allowedExams.includes(examName) ? examName : "RRB NTPC";
-      const profile = readJson("rrbQuizProfile", {});
-      const currentUser = readJson("rrbCurrentUser", {});
-      const currentExam = sanitizeExam(profile.preferredExam || currentUser.preferredExam || localStorage.getItem("selectedExam") || "RRB NTPC");
-      const currentStage = profile.preferredStage || currentUser.preferredStage || "";
-      const currentBranch = profile.preferredBranch || currentUser.preferredBranch || "Civil Engineering";
-
-      const baseMap = Object.fromEntries(
-        Object.entries(TOPICS || {}).map(([exam, subjects]) => [
-          exam,
-          Object.fromEntries(
-            Object.entries(normalizeMap(subjects)).map(([subject, topics]) => [normalizeSubject(subject), topics])
-          )
-        ])
-      );
-
-      const getActiveMap = () => {
-        const activeMap = baseMap[currentExam] || baseMap["RRB NTPC"] || {};
-        const selectedBranch = branchSelect?.value || currentBranch;
-        const shouldFilterJeTechnical = false;
-        if (!shouldFilterJeTechnical) {
-          return activeMap;
-        }
-
-        const targetTechnical = `Technical - ${selectedBranch}`;
-        return Object.fromEntries(
-          Object.entries(activeMap).filter(([subject]) => !subject.startsWith("Technical - ") || subject === targetTechnical)
-        );
-      };
-
-      const resolveSubject = (subject) => {
-        const activeMap = getActiveMap();
-        if (activeMap[subject]) {
-          return subject;
-        }
-        const normalizedTarget = normalizeLookupText(subject);
-        return Object.keys(activeMap).find((key) => normalizeLookupText(key) === normalizedTarget) || Object.keys(activeMap)[0] || "";
-      };
-
-      const fillSubjects = () => {
-        if (!subjectSelect) return;
-        const activeMap = getActiveMap();
-        const subjects = Object.keys(activeMap);
-        if (!subjects.length) return;
-        subjectSelect.replaceChildren(
-          ...subjects.map((subject) => {
-            const option = document.createElement("option");
-            option.value = subject;
-            option.textContent = normalizeSubject(subject);
-            return option;
-          })
-        );
-      };
-
-      const fillTopics = () => {
-        if (!topicSelect || !subjectSelect) return;
-        const activeMap = getActiveMap();
-        const subjectKey = resolveSubject(subjectSelect.value);
-        const topics = activeMap[subjectKey] || [];
-        topicSelect.replaceChildren(
-          ...topics.map((topic) => {
-            const option = document.createElement("option");
-            option.value = topic;
-            option.textContent = topic;
-            return option;
-          })
-        );
-        if (topics.length) {
-          topicSelect.value = topics[0];
-        }
-        if (topicHint) {
-          topicHint.textContent = `Showing topics for ${currentExam}${currentStage ? ` ${currentStage}` : ""} - ${subjectKey}.`;
-        }
-      };
-
-      const syncPracticeTypeUI = () => {
-        const currentType = practiceTypeInput?.value || "topic-practice";
-        const isChapterPractice = currentType === "chapter-practice";
-
-        practiceTypeButtons.forEach((button) => {
-          button.classList.toggle("active", button.dataset.practiceType === currentType);
-        });
-
-        topicField?.classList.toggle("hidden", isChapterPractice);
-        chapterPracticePanel?.classList.toggle("hidden", !isChapterPractice);
-
-        if (topicSelect) {
-          topicSelect.disabled = isChapterPractice;
-        }
-
-        if (topicHint) {
-          topicHint.textContent = isChapterPractice
-            ? "A mixed test will be created from the selected chapters."
-            : `Showing topics for ${currentExam}${currentStage ? ` ${currentStage}` : ""} - ${resolveSubject(subjectSelect?.value || "")}.`;
-        }
-      };
-
-      if (examSelect) {
-        examSelect.value = currentExam;
-      }
-      if (stageSelect && currentStage) {
-        stageSelect.value = currentStage;
-      }
-      if (branchSelect) {
-        branchSelect.value = currentBranch;
-      }
-      if (branchField) {
-        branchField.classList.add("hidden");
-      }
-      if (examIndicator) {
-        examIndicator.textContent = `Current Exam: ${currentExam}${currentStage ? ` ${currentStage}` : ""}`;
-      }
-
-      fillSubjects();
-      fillTopics();
-      syncPracticeTypeUI();
-      subjectSelect?.addEventListener("change", fillTopics);
-      practiceTypeButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          if (practiceTypeInput) {
-            practiceTypeInput.value = button.dataset.practiceType || "topic-practice";
-          }
-          syncPracticeTypeUI();
-        });
-      });
-      branchSelect?.addEventListener("change", () => {
-        fillSubjects();
-        fillTopics();
-        syncPracticeTypeUI();
-        if (examIndicator) {
-          examIndicator.textContent = `Current Exam: ${currentExam}${currentStage ? ` ${currentStage}` : ""}`;
-        }
-      });
-    })();
-  </script>
 </body>
 </html>
 
