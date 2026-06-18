@@ -1,7 +1,6 @@
 import { generateQuestions, getExplanation } from "./api.js?v=20260513c";
 import { STORAGE_KEYS, getExamSpecificKey, getCurrentExam, readJson, saveJson, pruneHistoryRecords, pruneSavedPapers, setupThemeToggle, applyTheme, escapeHtml } from "./app.js?v=20260513c";
 import { getExamPattern, ACTIVE_EXAMS, sanitizeActiveExam } from "./exam-patterns.js?v=20260513c";
-import { calculateLeaderboardPoints, updateLeaderboard } from "./leaderboard.js?v=20260513c";
 
 const MODE_LABELS = {
   practice: "Practice",
@@ -1727,12 +1726,7 @@ function setupScorePage() {
     saveJson(historyKey, nextHistory);
     saveJson(getExamSpecificKey(STORAGE_KEYS.lastAttempt, currentExam), attempt);
 
-    const leaderboardPoints = calculateLeaderboardPoints({
-      correctAnswers: results.score,
-      percentage: results.percentage
-    });
-    const leaderboardName = currentUser.name || currentUser.email || "Learner";
-    void updateLeaderboard(leaderboardName, currentExam, leaderboardPoints, results.percentage);
+
   }
   if (isLatestDuplicate) {
     saveJson(getExamSpecificKey(STORAGE_KEYS.lastAttempt, currentExam), history[0]);

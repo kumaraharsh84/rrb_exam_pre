@@ -1,6 +1,5 @@
 import { getExamPattern, ACTIVE_EXAMS, sanitizeActiveExam } from "./exam-patterns.js?v=20260513c";
 import { TOPICS } from "./rrb-syllabus-data.js?v=20260513c";
-import { renderLeaderboard } from "./leaderboard.js?v=20260513c";
 
 export function escapeHtml(value) {
   return String(value ?? "")
@@ -1715,12 +1714,7 @@ function setupUtilityPage() {
     case "analysis":
       renderAnalytics();
       break;
-    case "leaderboard":
-      void renderLeaderboard({
-        exam: activeExam,
-        username: profile.name || currentUser.name || currentUser.email || "Learner"
-      });
-      break;
+
     case "exam-dashboard":
       renderExamDashboard();
       break;
@@ -2016,12 +2010,7 @@ function setupHomePage() {
   if (document.querySelector("#analytics-list")) {
     renderAnalytics();
   }
-  if (document.querySelector("[data-tab-panel='leaderboard']")) {
-    void renderLeaderboard({
-      exam: profile.preferredExam || currentUser.preferredExam || "RRB NTPC",
-      username: profile.name || currentUser.name || currentUser.email || "Learner"
-    });
-  }
+
   if (document.querySelector("#exam-dashboard")) {
     renderExamDashboard();
   }
@@ -2465,10 +2454,6 @@ function setupHomePage() {
     renderFinalMockHistory();
     renderLastAttemptCard();
     renderAnalytics();
-    void renderLeaderboard({
-      exam: preferredExam,
-      username: latestProfile.name || latestUser.name || latestUser.email || "Learner"
-    });
     renderExamDashboard();
     refreshWeakDrillState();
   });
