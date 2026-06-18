@@ -1266,7 +1266,8 @@ async function setupQuizPage() {
           <div class="flex flex-col items-center justify-center p-8 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px; text-align: center;">
             <div class="spinner" style="width: 48px; height: 48px; border: 4px solid rgba(216, 111, 69, 0.18); border-top-color: var(--accent); border-radius: 50%; margin: 0 auto 16px; animation: spin 1s linear infinite;"></div>
             <h3 class="text-lg font-bold text-on-surface mb-2" style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Generating Quiz Questions with AI</h3>
-            <p class="text-sm text-on-surface-variant max-w-md" style="color: var(--muted); font-size: 0.95rem; max-width: 400px; line-height: 1.5; margin: 0 auto;">Our AI Coach is generating a unique question set for this section. This takes about 15-30 seconds. You can start solving the other questions in the meantime!</p>
+            <p class="text-sm text-on-surface-variant max-w-md mb-4" style="color: var(--muted); font-size: 0.95rem; max-width: 400px; line-height: 1.5; margin: 0 auto 16px;">Our AI Coach is generating a unique question set for this section. This takes about 15-30 seconds. You can start solving the other questions in the meantime!</p>
+            <button id="bypass-ai-btn" class="mt-4 px-4 py-2.5 text-xs font-semibold rounded-xl border border-outline-variant/30 bg-surface-container-high text-primary hover:bg-primary-soft transition-all" style="margin-top: 16px; padding: 8px 16px; font-size: 0.85rem; font-weight: 600; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--primary); cursor: pointer;">Load Backup Local Questions Instead</button>
           </div>
         `;
         optionsList.innerHTML = "";
@@ -1347,6 +1348,20 @@ async function setupQuizPage() {
         renderQuestion();
       }
     };
+
+    questionText?.addEventListener("click", (e) => {
+      const btn = e.target.closest("#bypass-ai-btn");
+      if (btn) {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.textContent = "Loading Backup Questions...";
+        try {
+          backgroundFetchController.abort();
+        } catch (err) {
+          console.warn("Failed to abort background fetch:", err);
+        }
+      }
+    });
 
     bookmarkButton?.addEventListener("click", () => {
       const currentQuestion = questions[currentIndex];
